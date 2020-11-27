@@ -1,5 +1,6 @@
-import { ctx, canvas, gameBricks } from "./main.js";
+import { ctx, canvas, gameBricks, player } from "./main.js";
 import { MovingGameObject } from "./moving_game_object.js";
+import { Player } from "./player.js";
 
 export class GameBall extends MovingGameObject{
     constructor(x, y, velx, vely, radius, color){
@@ -12,6 +13,7 @@ export class GameBall extends MovingGameObject{
         super.update()
         this.bounceOffWalls()
         this.bounceOffBricks()
+        this.bounceOffPlayer()
     }
 
     draw(){
@@ -50,5 +52,9 @@ export class GameBall extends MovingGameObject{
         gameBricks.forEach((brick) => {
             brick.bounceBallOffMe(this)
         })
+    }
+
+    bounceOffPlayer(){
+        player.bounceBallOffMe(this)
     }
 }
