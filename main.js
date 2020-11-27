@@ -1,7 +1,8 @@
-import {CANVAS_WIDTH, CANVAS_HEIGHT, BRICK_SCALING} from "./constants.js"
+import {CANVAS_WIDTH, CANVAS_HEIGHT, BRICK_SCALING, KEY_A, KEY_LEFT, KEY_D, KEY_RIGHT, BALL_SPEED} from "./constants.js"
 import { GameBrick } from "./game_brick.js"
 import { GameBall } from "./game_ball.js"
 import { BrickTextureSource } from "./brick_texture_source.js"
+import { Player } from "./player.js"
 
 // Export Global Variables
 export const canvas = document.querySelector('canvas')
@@ -14,6 +15,7 @@ canvas.height = CANVAS_HEIGHT
 // Declare variables to be used in the game-loop
 export var gameBricks = []
 export var gameBalls = []
+export var player = new Player()
 
 // Animation game-loop function
 function animate(){
@@ -37,8 +39,22 @@ function animate(){
         ball.update()
         ball.draw()
     })
+
+    player.update()
+    player.draw()
 }
 
+// Called whenever a key is pressed down
+function handleKeyDownEvent(event){
+    player.handleKeyDownEvent(event)
+}
+
+// Called whenever a key is released
+function handleKeyUpEvent(event){
+    player.handleKeyUpEvent(event)
+}
+
+//TODO replace this with a brick generation system...
 function generateBricks(){
     const b = new GameBrick(0, 0, new BrickTextureSource(1))
     b.img.onload = function(){
@@ -57,6 +73,10 @@ function generateBricks(){
     }
 }
 
-gameBalls.push(new GameBall(canvas.width, canvas.height, -1, -1, 4, "white"))
+// Add event listeners
+window.addEventListener("keydown", handleKeyDownEvent, false)
+window.addEventListener("keyup", handleKeyUpEvent, false)
+
+gameBalls.push(new GameBall(canvas.width, canvas.height, -BALL_SPEED, -BALL_SPEED, 4, "white"))
 generateBricks()
 animate()
