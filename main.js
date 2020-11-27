@@ -1,20 +1,62 @@
-import {Ball} from "./ball.js"
+import {CANVAS_WIDTH, CANVAS_HEIGHT, BRICK_SCALING} from "./constants.js"
+import { GameBrick } from "./game_brick.js"
+import { GameBall } from "./game_ball.js"
+import { BrickTextureSource } from "./brick_texture_source.js"
 
+// Export Global Variables
 export const canvas = document.querySelector('canvas')
-canvas.width = 384
-canvas.height = 448
 export const ctx = canvas.getContext('2d')
 
-let animationID
+// Set canvas dimensions
+canvas.width = CANVAS_WIDTH
+canvas.height = CANVAS_HEIGHT
 
-let ball = new Ball(100, 100, 50, 'green', {x: 3, y: 3})
+// Declare variables to be used in the game-loop
+export var gameBricks = []
+export var gameBalls = []
 
-function gameLoop(){
-    animationID = requestAnimationFrame(gameLoop)
-    ctx.fillStyle = '#034f84'
+// Animation game-loop function
+function animate(){
+    requestAnimationFrame(animate)
+    ctx.fillStyle = 'black'
     ctx.fillRect(0, 0, canvas.width, canvas.height)
 
-    ball.update()
+    // Loop through gameBricks
+    gameBricks.forEach((brick, index) => {
+        brick.update()
+        brick.draw()
+        if (brick.health.isDead()){
+            setTimeout(() => {
+                gameBricks.splice(index, 1)
+            }, 0)
+        }
+    })
+
+    // Loop through gameBalls
+    gameBalls.forEach((ball, index) => {
+        ball.update()
+        ball.draw()
+    })
 }
 
-gameLoop()
+function generateBricks(){
+    const b = new GameBrick(0, 0, new BrickTextureSource(1))
+    b.img.onload = function(){
+        let offX = 0
+        let offY = 100
+        var textureNum = 0
+        for(var i = 0; i < 5; i++){
+            for (var j = 0; j < 5; j++){
+                gameBricks.push(new GameBrick(
+                    j*b.img.width*BRICK_SCALING + offX, 
+                    i*b.img.height*BRICK_SCALING + offY, 
+                    new BrickTextureSource(1+(2*textureNum))))
+                    textureNum += 1
+            }
+        }
+    }
+}
+
+gameBalls.push(new GameBall(canvas.width, canvas.height, -1, -1, 4, "white"))
+generateBricks()
+animate()
