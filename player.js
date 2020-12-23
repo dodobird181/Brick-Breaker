@@ -1,44 +1,50 @@
-import { BrickTextureSource } from "./brick_texture_source.js"
-import { CANVAS_HEIGHT, CANVAS_WIDTH, KEY_A, KEY_D, KEY_LEFT, KEY_RIGHT, PLAYER_SCALING, PLAYER_SPEED, PLAYER_START_HEIGHT } from "./constants.js"
+import { CANVAS_HEIGHT, CANVAS_WIDTH, KEY_A, KEY_D, KEY_LEFT, KEY_RIGHT, PLAYER_SCALING, PLAYER_SPEED, PLAYER_START_HEIGHT, PLAYER_TEXTURE_NUM } from "./constants.js"
 import { GameBrick } from "./game_brick.js"
+import { GameTexture } from "./game_texture.js"
 import { ctx } from "./main.js"
 import { MovingGameObject } from "./moving_game_object.js"
-import { PlayerTextureSource } from "./player_texture_source.js"
 
+/**
+ * Player is the controllable platform that is used to deflect
+ * balls towards the bricks.
+ */
 export class Player extends GameBrick
 {
+	/**
+	 * Creates a new Player.
+	 */
 	constructor(){
-		super(CANVAS_WIDTH/2, PLAYER_START_HEIGHT, new PlayerTextureSource(56))
-		this.pos = new MovingGameObject(CANVAS_WIDTH/2, CANVAS_HEIGHT - PLAYER_START_HEIGHT, 0, 0)
+		super(CANVAS_WIDTH/2, CANVAS_HEIGHT - PLAYER_START_HEIGHT, PLAYER_TEXTURE_NUM)
+
+		// Override the brick's gameTexture
+		this.gameTexture = new GameTexture(PLAYER_TEXTURE_NUM, PLAYER_SCALING)
+
+		// Declare key logging variables
 		this.rightKeyDown = false
 		this.leftKeyDown = false
+
+		// Declare position
+		this.pos = new MovingGameObject(this.x, this.y, 0, 0)
 	}
 
+	_onBallHit(){
+
+	}
+
+	/**
+	 * Updates the position of this Player.
+	 */
 	update(){
-        this.imgWidth = this.img.width*PLAYER_SCALING
-		this.imgHeight = this.img.height*PLAYER_SCALING
-		this.pos.update()
-
-		// Update superclass pos from movingobject pos
-		// so that superclass collision detection functions
-		this.x = this.pos.x
-		this.y = this.pos.y
-	}
-	
-	draw(){
-		ctx.drawImage(this.img, this.pos.x, this.pos.y, this.imgWidth, this.imgHeight)
-	}
-
-	onBallHit(){
-		
+		this.x += this.pos.velx
+		this.y += this.pos.vely
 	}
 
 	handleKeyDownEvent(event){
 		const key = event.keyCode
-		if (this.isLeftKey(key)){
+		if (this._isLeftKey(key)){
 			this.leftKeyDown = true
 		}
-		else if(this.isRightKey(key)){
+		else if(this._isRightKey(key)){
 			this.rightKeyDown = true
 		}
 		this.updateVelocity()
@@ -46,16 +52,16 @@ export class Player extends GameBrick
 
 	handleKeyUpEvent(event){
 		const key = event.keyCode
-		if (this.isLeftKey(key)){
+		if (this._isLeftKey(key)){
 			this.leftKeyDown = false
 		}
-		else if(this.isRightKey(key)){
+		else if(this._isRightKey(key)){
 			this.rightKeyDown = false
 		}
 		this.updateVelocity()
 	}
 
-	isLeftKey(key){
+	_isLeftKey(key){
 		if (key == KEY_A || key == KEY_LEFT){
 			return true
 		}
@@ -64,7 +70,7 @@ export class Player extends GameBrick
 		}
 	}
 
-	isRightKey(key){
+	_isRightKey(key){
 		if (key == KEY_D || key == KEY_RIGHT){
 			return true
 		}

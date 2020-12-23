@@ -1,7 +1,6 @@
 import {CANVAS_WIDTH, CANVAS_HEIGHT, BRICK_SCALING, KEY_A, KEY_LEFT, KEY_D, KEY_RIGHT, BALL_SPEED} from "./constants.js"
 import { GameBrick } from "./game_brick.js"
 import { GameBall } from "./game_ball.js"
-import { BrickTextureSource } from "./brick_texture_source.js"
 import { Player } from "./player.js"
 
 // Export Global Variables
@@ -56,21 +55,41 @@ function handleKeyUpEvent(event){
 
 //TODO replace this with a brick generation system...
 function generateBricks(){
-    const b = new GameBrick(0, 0, new BrickTextureSource(1))
-    b.img.onload = function(){
+
+    const b = new GameBrick(0, 0, 1)
+    b.gameTexture.image.onload = function(){
+        const width = b.gameTexture.image.width
+        const height = b.gameTexture.image.height
+        for (var i = 0; i < 10; i++){
+            for (var j = 0; j < 1; j++){
+                gameBricks.push(new GameBrick(i*width*0.1, j*0.3, 1))
+            }
+        }
+    }
+    
+
+    /*
+    const brick = new GameBrick(0, 0, 1)
+    brick.getImage().onload = function(){
         let offX = 0
         let offY = 100
         var textureNum = 0
         for(var i = 0; i < 5; i++){
             for (var j = 0; j < 5; j++){
-                gameBricks.push(new GameBrick(
-                    j*b.img.width*BRICK_SCALING + offX, 
-                    i*b.img.height*BRICK_SCALING + offY, 
-                    new BrickTextureSource(1+(2*textureNum))))
-                    textureNum += 1
+                const width = brick.gameTexture.gameImage.width.get()
+                const height = brick.gameTexture.gameImage.height.get()
+                console.log("Width: " + width + ", height: " + height)
+                gameBricks.push(
+                    new GameBrick(
+                    j*brick.getImage.width*BRICK_SCALING + offX, 
+                    i*brick.getImage.height*BRICK_SCALING + offY, 
+                    1 + 2*textureNum
+                    )
+                )
+                textureNum += 1
             }
         }
-    }
+    }*/
 }
 
 // Add event listeners

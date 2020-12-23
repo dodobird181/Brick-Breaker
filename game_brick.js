@@ -1,37 +1,63 @@
-import { BrickTextureSource } from "./brick_texture_source.js"
 import { BRICK_SCALING } from "./constants.js"
 import { GameObject } from "./game_object.js"
+import { GameTexture } from "./game_texture.js"
 import { Health } from "./health.js"
 import { ctx } from "./main.js"
+import { RangedInt } from "./utils/ranged_int.js"
 
+/**
+ * GameBrick is a single brick-breaker brick.
+ */
 export class GameBrick extends GameObject{
-    constructor(x, y, bts){
+
+    /**
+     * Creates a new GameBrick.
+     * @param {*} x The x coordinate of the brick.
+     * @param {*} y The y coordinate of the brick.
+     * @param {*} textureNumber The texture number for the brick to have.
+     */
+    constructor(x, y, textureNumber){
         super(x, y)
-        var img = new Image()
-        img.src = bts.src
-        this.img = img
-        this.src = bts
-        this.health = new Health(2, () => {})
+
+        // Constrain textureNumber between 1 and 20
+        let rangedTextureNumber = new RangedInt(1, 20)
+        rangedTextureNumber.set(textureNumber)
+        this.rangedTextureNumber = rangedTextureNumber
+
+        // Create a new GameTexture for the brick
+        this.gameTexture = new GameTexture(rangedTextureNumber.get(), 0.1, BRICK_SCALING)
+
+        // Give the brick 2 hitpoints
+        this.health = new Health(2)
     }
 
-    update(){
-        this.imgWidth = this.img.width*BRICK_SCALING
-        this.imgHeight = this.img.height*BRICK_SCALING
-    }
+    update(){}
 
+    /**
+     * Draws the GameBrick on-screen.
+     */
     draw(){
-        ctx.drawImage(this.img, this.x, this.y, this.imgWidth, this.imgHeight)
+        ctx.drawImage(this.gameTexture.image, this.x, this.y, this.width(), this.height())
     }
 
-    onBallHit(){
-        this.health.deincrement()
-        if (this.health.isDead() == false){
-            var img = new Image()
-            var bts = new BrickTextureSource(this.src.srcNum+1)
-            img.src = bts.src
-            this.img = img
-            this.src = bts
+    /**
+     * Handles the behavior of the brick when a ball hits it.
+     */
+    _onBallHit(){
+
+        // If the brick has full health, give it a "broken" texture.
+        if (this.health.get() == 2){
+            var newRangedTextureNumber = new RangedInt(1, 20)
+            newRangedTextureNumber.set(this.rangedTextureNumber.get() + 1)
+            this.rangedTextureNumber = newRangedTextureNumber
+            var newGameTexture = new GameTexture(this.rangedTextureNumber.get(), BRICK_SCALING)
+            setTimeout(() => {
+                this.gameTexture = newGameTexture
+            }, 0)
         }
+
+        // Deincrement the brick's health
+        this.health.deincrement()
     }
 
     /*
@@ -41,21 +67,22 @@ export class GameBrick extends GameObject{
      */
     bounceBallOffMe(ball){
         if (this.isCollidingWithBall(ball)){
-            this.onBallHit()
-            if (ball.y > this.y && ball.y < this.y + this.imgHeight){//collision in dim y
+            console.log("go")
+            this._onBallHit()
+            if (ball.y > this.y && ball.y < this.y + this.height()){//collision in dim y
                 if (ball.x < this.x){//ball hit left side
                     ball.velx = Math.abs(ball.velx)*(-1)
                 }
-                else if (ball.x > this.x + this.imgWidth){//ball hit right side
+                else if (ball.x > this.x + this.width()){//ball hit right side
                     ball.velx = Math.abs(ball.velx)
                 }
             }
-            else if (ball.x > this.x && ball.x < this.x + this.imgWidth)//collision in dim x
+            else if (ball.x > this.x && ball.x < this.x + this.width())//collision in dim x
             {
                 if (ball.y < this.y){//ball hit top
                     ball.vely = Math.abs(ball.vely)*(-1)
                 }
-                else if (ball.y > this.y + this.imgHeight){//ball hit bottom
+                else if (ball.y > this.y + this.height()){//ball hit bottom
                     ball.vely = Math.abs(ball.vely)
                 }
             }
@@ -68,13 +95,27 @@ export class GameBrick extends GameObject{
      */
     isCollidingWithBall(ball){
         const r = ball.radius
-        if (ball.x+r > this.x && ball.x-r < this.x + this.imgWidth){
-            if (ball.y+r > this.y && ball.y-r < this.y + this.imgHeight){
+        if (ball.x+r > this.x && ball.x-r < this.x + this.width()){
+            if (ball.y+r > this.y && ball.y-r < this.y + this.height()){
                 return true
             }
         }
         else{
             return false
         }
+    }
+
+    /**
+     * Get for brick width.
+     */
+    width(){
+        return this.gameTexture.image.width
+    }
+
+    /**
+     * Get for brick height.
+     */
+    height(){
+        return this.gameTexture.image.height
     }
 }

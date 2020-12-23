@@ -1,18 +1,25 @@
+
+
+
 export class Health{
 
-    constructor(amt, onDeath){
+    constructor(amt){
         this._amt = amt
-        this.onDeath = onDeath
+        this.onDeath = () => {}
+        this.onIncrement = () => {}
+        this.onDeincrement = () => {}
     }
 
     deincrement(){
         this._amt -= 1
         this.checkForDeath()
+        this.onDeincrement()
     }
 
     increment(){
         this._amt += 1
         this.checkForDeath()
+        this.onIncrement()
     }
 
     get(){
