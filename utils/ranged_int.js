@@ -1,9 +1,8 @@
 import { None, Some } from "./option.js"
 
-
 /**
  * An integer that is only defined inside a certain
- * range of integers. For example: [5, 26].
+ * range of integers. For example: [5, 26], inclusive.
  */
 export class RangedInt{
 
@@ -34,6 +33,20 @@ export class RangedInt{
      */
     set(val){
         this._val = this._getValInRange(val)
+    }
+
+    /**
+     * Increment the ranged int (will NEVER go past the max value!).
+     */
+    incr(){
+        this._val = this._getValInRange(this._val + 1)
+    }
+
+    /**
+     * Deincrement the ranged int (will NEVER go past the min value!).
+     */
+    decr(){
+        this._val = this._getValInRange(this._val - 1)
     }
 
     /**
