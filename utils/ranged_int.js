@@ -63,3 +63,10 @@ export class RangedInt{
         return new Some(val)
     }
 }
+
+export class SomeRangedInt extends RangedInt {
+    constructor(val, low, hi) {
+        super(low, hi)
+        this.set(val)
+    }
+}
