@@ -6,14 +6,16 @@ export const CANVAS_HEIGHT = 448
 export const BALL_SPEED = 3
 
 // Drawing Settings
-export const BRICK_SCALING = 0.2
+export const BRICK_SCALING_WIDTH = 1/16
+export const BRICK_SCALING_HEIGHT = 1/6
 export const TEXTURE_FILEPATH_START = "./res/"
 export const TEXTURE_FILEPATH_END = "-Breakout-Tiles.png"
 
 // Player Settings
 export const PLAYER_START_HEIGHT = 50
-export const PLAYER_SCALING = 0.15
-export const PLAYER_SPEED = 3.5
+export const PLAYER_SCALING_WIDTH = 0.09
+export const PLAYER_SCALING_HEIGHT = 0.1
+export const PLAYER_SPEED = 4
 export const PLAYER_TEXTURE_NUM = 56
 
 // Keys

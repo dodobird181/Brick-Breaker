@@ -1,7 +1,10 @@
-import {CANVAS_WIDTH, CANVAS_HEIGHT, BRICK_SCALING, KEY_A, KEY_LEFT, KEY_D, KEY_RIGHT, BALL_SPEED} from "./constants.js"
+import {CANVAS_WIDTH, CANVAS_HEIGHT, BALL_SPEED, BRICK_SCALING_WIDTH, BRICK_SCALING_HEIGHT} from "./constants.js"
 import { GameBrick } from "./game_brick.js"
 import { GameBall } from "./game_ball.js"
 import { Player } from "./player.js"
+import { MyImage } from "./image.js"
+import { Brick } from "./brick.js"
+import { RangedInt } from "./utils/ranged_int.js"
 
 // Export Global Variables
 export const canvas = document.querySelector('canvas')
@@ -56,17 +59,26 @@ function handleKeyUpEvent(event){
 //TODO replace this with a brick generation system...
 function generateBricks(){
 
-    const b = new GameBrick(0, 0, 1)
-    b.gameTexture.image.onload = function(){
-        const width = b.gameTexture.image.width
-        const height = b.gameTexture.image.height
-        for (var i = 0; i < 10; i++){
-            for (var j = 0; j < 1; j++){
-                gameBricks.push(new GameBrick(i*width*0.1, j*0.3, 1))
-            }
+    const brick = new Brick(0, 0, 1)
+    brick.texture.myImg.image.onload = function() {
+        var w = this.width * BRICK_SCALING_WIDTH
+        var h = this.height * BRICK_SCALING_HEIGHT
+        console.log(this.width)
+        console.log(this.height)
+        for(var i = 0; i < 16; i++){
+            gameBricks.push(
+                new Brick(i * w, 0, 3)
+            )
+        }
+        for(var i = 0; i < 16; i++){
+            gameBricks.push(
+                new Brick(i * w, h, 5)
+            )
         }
     }
-    
+
+    var brick2 = new Brick(100, 100, 1)
+    gameBricks.push(brick2)
 
     /*
     const brick = new GameBrick(0, 0, 1)

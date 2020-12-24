@@ -1,4 +1,4 @@
-import { BRICK_SCALING } from "./constants.js"
+import { BRICK_SCALING_HEIGHT, BRICK_SCALING_WIDTH } from "./constants.js"
 import { GameObject } from "./game_object.js"
 import { GameTexture } from "./game_texture.js"
 import { Health } from "./health.js"
@@ -19,16 +19,12 @@ export class GameBrick extends GameObject{
     constructor(x, y, textureNumber){
         super(x, y)
 
-        // Constrain textureNumber between 1 and 20
-        let rangedTextureNumber = new RangedInt(1, 20)
-        rangedTextureNumber.set(textureNumber)
-        this.rangedTextureNumber = rangedTextureNumber
-
-        // Create a new GameTexture for the brick
-        this.gameTexture = new GameTexture(rangedTextureNumber.get(), 0.1, BRICK_SCALING)
-
         // Give the brick 2 hitpoints
         this.health = new Health(2)
+
+        this.textureNum = new RangedInt(1, 20)
+        this.textureNum.set(textureNumber)
+        this.brickTexture = this.createBrickTexture()
     }
 
     update(){}
@@ -37,7 +33,18 @@ export class GameBrick extends GameObject{
      * Draws the GameBrick on-screen.
      */
     draw(){
-        ctx.drawImage(this.gameTexture.image, this.x, this.y, this.width(), this.height())
+        this.brickTexture.draw(this.x, this.y)
+    }
+
+    /**
+     * TODO
+     */
+    createBrickTexture(){
+        return new GameTexture(
+            this.textureNum.get(), 
+            BRICK_SCALING_WIDTH,
+            BRICK_SCALING_HEIGHT
+        )
     }
 
     /**
@@ -47,13 +54,8 @@ export class GameBrick extends GameObject{
 
         // If the brick has full health, give it a "broken" texture.
         if (this.health.get() == 2){
-            var newRangedTextureNumber = new RangedInt(1, 20)
-            newRangedTextureNumber.set(this.rangedTextureNumber.get() + 1)
-            this.rangedTextureNumber = newRangedTextureNumber
-            var newGameTexture = new GameTexture(this.rangedTextureNumber.get(), BRICK_SCALING)
-            setTimeout(() => {
-                this.gameTexture = newGameTexture
-            }, 0)
+            this.textureNum.incr()
+            this.brickTexture = this.createBrickTexture()
         }
 
         // Deincrement the brick's health
@@ -109,13 +111,13 @@ export class GameBrick extends GameObject{
      * Get for brick width.
      */
     width(){
-        return this.gameTexture.image.width
+        return this.brickTexture.image.width
     }
 
     /**
      * Get for brick height.
      */
     height(){
-        return this.gameTexture.image.height
+        return this.brickTexture.image.height
     }
 }
