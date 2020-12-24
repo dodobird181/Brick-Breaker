@@ -6,7 +6,7 @@
 export class GameObject{
 
     /**
-     * Create a new GameObject.
+     * Creates a GameObject.
      * @param {*} x The x position of this GameObject.
      * @param {*} y The y position of this GameObject.
      */

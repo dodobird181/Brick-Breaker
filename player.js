@@ -1,14 +1,16 @@
-import { CANVAS_HEIGHT, CANVAS_WIDTH, KEY_A, KEY_D, KEY_LEFT, KEY_RIGHT, PLAYER_SCALING, PLAYER_SPEED, PLAYER_START_HEIGHT, PLAYER_TEXTURE_NUM } from "./constants.js"
+import { Brick } from "./brick.js"
+import { CANVAS_HEIGHT, CANVAS_WIDTH, KEY_A, KEY_D, KEY_LEFT, KEY_RIGHT, PLAYER_SCALING_HEIGHT, PLAYER_SCALING_WIDTH, PLAYER_SPEED, PLAYER_START_HEIGHT, PLAYER_TEXTURE_NUM } from "./constants.js"
 import { GameBrick } from "./game_brick.js"
 import { GameTexture } from "./game_texture.js"
 import { ctx } from "./main.js"
 import { MovingGameObject } from "./moving_game_object.js"
+import { Texture } from "./texture.js"
 
 /**
  * Player is the controllable platform that is used to deflect
  * balls towards the bricks.
  */
-export class Player extends GameBrick
+export class Player extends Brick
 {
 	/**
 	 * Creates a new Player.
@@ -17,7 +19,7 @@ export class Player extends GameBrick
 		super(CANVAS_WIDTH/2, CANVAS_HEIGHT - PLAYER_START_HEIGHT, PLAYER_TEXTURE_NUM)
 
 		// Override the brick's gameTexture
-		this.gameTexture = new GameTexture(PLAYER_TEXTURE_NUM, PLAYER_SCALING)
+		this.texture = new Texture(PLAYER_TEXTURE_NUM, PLAYER_SCALING_WIDTH, PLAYER_SCALING_HEIGHT)
 
 		// Declare key logging variables
 		this.rightKeyDown = false

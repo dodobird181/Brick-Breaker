@@ -1,6 +1,12 @@
 
 
-
+/**
+ * Health is an integer value that models the
+ * hitpoints of various game objects.
+ * 
+ * Health has default hooks for certain types of events
+ * defined in the constructor that will automatically trigger.
+ */
 export class Health{
 
     constructor(amt){
@@ -9,26 +15,25 @@ export class Health{
         this.onIncrement = () => {}
         this.onDeincrement = () => {}
     }
-
-    deincrement(){
-        this._amt -= 1
-        this.checkForDeath()
-        this.onDeincrement()
-    }
-
-    increment(){
-        this._amt += 1
-        this.checkForDeath()
-        this.onIncrement()
-    }
-
+    
     get(){
         return this._amt
-        this.checkForDeath()
     }
 
     set(amt){
         this._amt = amt
+        this.checkForDeath()
+    }
+
+    deincrement(){
+        this._amt -= 1
+        this.onDeincrement()
+        this.checkForDeath()
+    }
+
+    increment(){
+        this._amt += 1
+        this.onIncrement()
         this.checkForDeath()
     }
 
