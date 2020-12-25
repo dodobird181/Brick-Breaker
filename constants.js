@@ -13,10 +13,10 @@ export const TEXTURE_FILEPATH_END = "-Breakout-Tiles.png"
 
 // Player Settings
 export const PLAYER_START_HEIGHT = 50
-export const PLAYER_SCALING_WIDTH = 0.09
-export const PLAYER_SCALING_HEIGHT = 0.1
+export const PLAYER_WIDTH = 100
+export const PLAYER_HEIGHT = 15
+export const PLAYER_COLOR = "grey"
 export const PLAYER_SPEED = 4
-export const PLAYER_TEXTURE_NUM = 56
 
 // Keys
 export const KEY_LEFT = 37

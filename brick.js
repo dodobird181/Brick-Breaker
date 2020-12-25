@@ -10,7 +10,7 @@ const TEXTURE_RANGE = [1, 20]
 /**
  * A brick-breaker brick.
  */
-export class Brick extends GameObject{
+export class Brick{
 
     /**
      * Creates a new GameBrick.

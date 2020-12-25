@@ -1,44 +1,44 @@
-import { Brick } from "./brick.js"
-import { CANVAS_HEIGHT, CANVAS_WIDTH, KEY_A, KEY_D, KEY_LEFT, KEY_RIGHT, PLAYER_SCALING_HEIGHT, PLAYER_SCALING_WIDTH, PLAYER_SPEED, PLAYER_START_HEIGHT, PLAYER_TEXTURE_NUM } from "./constants.js"
-import { GameBrick } from "./game_brick.js"
-import { GameTexture } from "./game_texture.js"
-import { ctx } from "./main.js"
-import { MovingGameObject } from "./moving_game_object.js"
-import { Texture } from "./texture.js"
+import { CANVAS_HEIGHT, CANVAS_WIDTH, KEY_A, KEY_D, KEY_LEFT, KEY_RIGHT, PLAYER_COLOR, PLAYER_HEIGHT, PLAYER_SPEED, PLAYER_START_HEIGHT, PLAYER_WIDTH } from "./constants.js"
+import { balls } from "./main.js"
+import { Rect } from "./rect.js"
 
 /**
  * Player is the controllable platform that is used to deflect
  * balls towards the bricks.
  */
-export class Player extends Brick
-{
-	/**
-	 * Creates a new Player.
-	 */
+export class Player extends Rect{
 	constructor(){
-		super(CANVAS_WIDTH/2, CANVAS_HEIGHT - PLAYER_START_HEIGHT, PLAYER_TEXTURE_NUM)
-
-		// Override the brick's gameTexture
-		this.texture = new Texture(PLAYER_TEXTURE_NUM, PLAYER_SCALING_WIDTH, PLAYER_SCALING_HEIGHT)
+		super(
+			CANVAS_WIDTH / 2,
+			CANVAS_HEIGHT - PLAYER_START_HEIGHT,
+			PLAYER_WIDTH,
+			PLAYER_HEIGHT,
+			PLAYER_COLOR
+		)
 
 		// Declare key logging variables
 		this.rightKeyDown = false
 		this.leftKeyDown = false
 
-		// Declare position
-		this.pos = new MovingGameObject(this.x, this.y, 0, 0)
+		this.velx = 0
+		this.vely = 0
 	}
 
-	_onBallHit(){
-
-	}
-
-	/**
-	 * Updates the position of this Player.
-	 */
 	update(){
-		this.x += this.pos.velx
-		this.y += this.pos.vely
+
+		// Handle ball collisions
+		balls.forEach(ball => {
+			console.log("We gotta ball!")
+		})
+
+		// Stops player from moving if touching either side of the screen
+		if ((this.x <= 0 && this.leftKeyDown) || (this.x + this.width >= CANVAS_WIDTH && this.rightKeyDown)){
+			this.velx = 0
+		}
+
+		// Update position
+		this.x += this.velx
+		this.y += this.vely
 	}
 
 	handleKeyDownEvent(event){
@@ -83,13 +83,13 @@ export class Player extends Brick
 
 	updateVelocity(){
 		if (this.leftKeyDown && !this.rightKeyDown){
-			this.pos.velx = -PLAYER_SPEED
+			this.velx = -PLAYER_SPEED
 		}
 		else if(this.rightKeyDown && !this.leftKeyDown){
-			this.pos.velx = PLAYER_SPEED
+			this.velx = PLAYER_SPEED
 		}
 		else if(!(this.leftKeyDown || this.rightKeyDown)){
-			this.pos.velx = 0
+			this.velx = 0
 		}
 	}
 }

@@ -1,10 +1,7 @@
-import {CANVAS_WIDTH, CANVAS_HEIGHT, BALL_SPEED, BRICK_SCALING_WIDTH, BRICK_SCALING_HEIGHT} from "./constants.js"
-import { GameBrick } from "./game_brick.js"
-import { GameBall } from "./game_ball.js"
+import { Ball } from "./ball.js"
+import { BALL_SPEED, CANVAS_HEIGHT, CANVAS_WIDTH } from "./constants.js"
 import { Player } from "./player.js"
-import { MyImage } from "./image.js"
-import { Brick } from "./brick.js"
-import { RangedInt } from "./utils/ranged_int.js"
+
 
 // Export Global Variables
 export const canvas = document.querySelector('canvas')
@@ -15,19 +12,19 @@ canvas.width = CANVAS_WIDTH
 canvas.height = CANVAS_HEIGHT
 
 // Declare variables to be used in the game-loop
-export var gameBricks = []
-export var gameBalls = []
+export var bricks = []
+export var balls = []
 export var player = new Player()
 
 // Animation game-loop function
-function animate(){
+function animate() {
+
     requestAnimationFrame(animate)
-    ctx.fillStyle = 'black'
-    ctx.fillRect(0, 0, canvas.width, canvas.height)
+    ctx.fillStyle = 'white'
+    ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT)
 
     // Loop through gameBricks
-    gameBricks.forEach((brick, index) => {
-        brick.update()
+    bricks.forEach((brick, index) => {
         brick.draw()
         if (brick.health.isDead()){
             setTimeout(() => {
@@ -37,7 +34,7 @@ function animate(){
     })
 
     // Loop through gameBalls
-    gameBalls.forEach((ball, index) => {
+    balls.forEach((ball) => {
         ball.update()
         ball.draw()
     })
@@ -104,10 +101,12 @@ function generateBricks(){
     }*/
 }
 
+bricks.push()
+
 // Add event listeners
 window.addEventListener("keydown", handleKeyDownEvent, false)
 window.addEventListener("keyup", handleKeyUpEvent, false)
 
-gameBalls.push(new GameBall(canvas.width, canvas.height, -BALL_SPEED, -BALL_SPEED, 4, "white"))
-generateBricks()
+balls.push(new Ball(canvas.width, canvas.height, -BALL_SPEED, -BALL_SPEED, 4, "grey"))
+//generateBricks()
 animate()
