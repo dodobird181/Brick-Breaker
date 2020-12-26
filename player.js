@@ -1,4 +1,4 @@
-import { CANVAS_HEIGHT, CANVAS_WIDTH, KEY_A, KEY_D, KEY_LEFT, KEY_RIGHT, PLAYER_COLOR, PLAYER_HEIGHT, PLAYER_SPEED, PLAYER_START_HEIGHT, PLAYER_WIDTH } from "./constants.js"
+import { BALL_ANGLE_LIMITER, BALL_SPEED, CANVAS_HEIGHT, CANVAS_WIDTH, KEY_A, KEY_D, KEY_LEFT, KEY_RIGHT, PLAYER_COLOR, PLAYER_HEIGHT, PLAYER_SPEED, PLAYER_START_HEIGHT, PLAYER_WIDTH } from "./constants.js"
 import { balls } from "./main.js"
 import { Rect } from "./rect.js"
 
@@ -26,9 +26,26 @@ export class Player extends Rect{
 
 	update(){
 
+		const centerX = this.x + PLAYER_WIDTH / 2
+		const centerY = this.y + PLAYER_HEIGHT / 2
+
 		// Handle ball collisions
 		balls.forEach(ball => {
-			console.log("We gotta ball!")
+			if (this.colliding(ball)){
+				const diffX = ball.x - centerX
+				const diffY = ball.y - centerY
+				var thetaTo = Math.atan2(diffY, diffX)
+				if (thetaTo > -BALL_ANGLE_LIMITER){//limit sideways bounces
+					thetaTo = -BALL_ANGLE_LIMITER
+				}
+				else if (thetaTo < -Math.PI + BALL_ANGLE_LIMITER){
+					thetaTo = -Math.PI + BALL_ANGLE_LIMITER
+				}
+				const bounceVelX = BALL_SPEED * Math.cos(thetaTo)
+				const bounceVelY = BALL_SPEED * Math.sin(thetaTo)
+				ball.velx = bounceVelX
+				ball.vely = bounceVelY
+			}
 		})
 
 		// Stops player from moving if touching either side of the screen
