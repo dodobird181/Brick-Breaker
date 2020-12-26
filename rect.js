@@ -1,3 +1,4 @@
+import { Ball } from "./ball.js"
 import { ctx } from "./main.js"
 import { InvalidClassInstance } from "./utils/exceptions.js"
 

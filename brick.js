@@ -1,41 +1,43 @@
-import { BRICK_SCALING_HEIGHT, BRICK_SCALING_WIDTH } from "./constants.js"
-import { GameObject } from "./game_object.js"
+import { RGBCol } from "./colors.js"
+import { BRICK_WIDTH, BRICK_HEIGHT } from "./constants.js"
 import { Health } from "./health.js"
-import { Texture } from "./texture.js"
-import { RangedInt } from "./utils/ranged_int.js"
+import { balls, ctx } from "./main.js"
+import { Rect } from "./rect.js"
 
-// The range of acceptable brick texture numbers.
-const TEXTURE_RANGE = [1, 20]
+export class Brick extends Rect{
 
-/**
- * A brick-breaker brick.
- */
-export class Brick{
-
-    /**
-     * Creates a new GameBrick.
-     * @param {*} x
-     * @param {*} y
-     * @param {*} num the brick texture number.
-     */
-    constructor(x, y, num){
-        super(x, y)
-
-        // Create the brick's texture.
-        var textNum = new RangedInt(num, TEXTURE_RANGE[0], TEXTURE_RANGE[1])
-        var texture = new Texture(textNum.get(), BRICK_SCALING_WIDTH, BRICK_SCALING_HEIGHT)
-
-        // Give the brick 2 hitpoints.
+    constructor(x, y, rgbCol){
+        super(x, y, BRICK_WIDTH, BRICK_HEIGHT, rgbCol.toString())
         this.health = new Health(2)
-
-        this.texture = texture
-        this.textNum = textNum
+        this.alpha = 1.0
+        rgbCol.darken(120)
+        this.borderColor = rgbCol.toString()
     }
 
-    update(){}
+    update(){
+
+        // Collide with balls
+        balls.forEach(ball => {
+            if (this.colliding(ball)){
+                this.bounceBallOffMe(ball)
+            }
+        })
+    }
 
     draw(){
-        this.texture.draw(this.x, this.y)
+
+        ctx.globalAlpha = this.alpha
+
+        // Draw brick
+        super.draw()
+
+        // Draw border outline
+        ctx.strokeStyle = this.borderColor
+        ctx.al
+        ctx.lineWidth = 2
+        ctx.strokeRect(this.x, this.y, this.width, this.height)
+
+        ctx.globalAlpha = 1.0
     }
 
     /**
@@ -45,8 +47,7 @@ export class Brick{
 
         // If the brick has full health, give it a "broken" texture.
         if (this.health.get() == 2){
-            this.textNum.increment()
-            this.texture = new Texture(this.textNum.get(), BRICK_SCALING_WIDTH, BRICK_SCALING_HEIGHT)
+            this.alpha = 0.3
         }
 
         // Deincrement the brick's health
@@ -61,57 +62,26 @@ export class Brick{
      * this brick.
      */
     bounceBallOffMe(ball){
-        if (this.isCollidingWithBall(ball)){
-            setTimeout(() => {
+        if (ball.y > this.y && ball.y < this.y + this.height){//collision in dim y
+            if (ball.x < this.x){//ball hit left side
+                ball.velx = Math.abs(ball.velx)*(-1)
                 this._onBallHit()
-            }, 1)
-            if (ball.y > this.y && ball.y < this.y + this.height()){//collision in dim y
-                if (ball.x < this.x){//ball hit left side
-                    ball.velx = Math.abs(ball.velx)*(-1)
-                }
-                else if (ball.x > this.x + this.width()){//ball hit right side
-                    ball.velx = Math.abs(ball.velx)
-                }
             }
-            else if (ball.x > this.x && ball.x < this.x + this.width())//collision in dim x
-            {
-                if (ball.y < this.y){//ball hit top
-                    ball.vely = Math.abs(ball.vely)*(-1)
-                }
-                else if (ball.y > this.y + this.height()){//ball hit bottom
-                    ball.vely = Math.abs(ball.vely)
-                }
+            else if (ball.x > this.x + this.width){//ball hit right side
+                ball.velx = Math.abs(ball.velx)
+                this._onBallHit()
             }
         }
-    }
-
-    /*
-     * Return true if any overlap exists between the brick and
-     * the parameterized ball.
-     */
-    isCollidingWithBall(ball){
-        const r = ball.radius
-        if (ball.x+r > this.x && ball.x-r < this.x + this.width()){
-            if (ball.y+r > this.y && ball.y-r < this.y + this.height()){
-                return true
+        else if (ball.x > this.x && ball.x < this.x + this.width)//collision in dim x
+        {
+            if (ball.y < this.y){//ball hit top
+                ball.vely = Math.abs(ball.vely)*(-1)
+                this._onBallHit()
+            }
+            else if (ball.y > this.y + this.height){//ball hit bottom
+                ball.vely = Math.abs(ball.vely)
+                this._onBallHit()
             }
         }
-        else{
-            return false
-        }
-    }
-
-    /**
-     * Get for brick width.
-     */
-    width(){
-        return this.texture.myImg.image.width
-    }
-
-    /**
-     * Get for brick height.
-     */
-    height(){
-        return this.texture.myImg.image.height
     }
 }
