@@ -3,13 +3,12 @@ export const CANVAS_WIDTH = 384
 export const CANVAS_HEIGHT = 448
 
 // Ball(s) Settings
-export const BALL_SPEED = 3
+export const BALL_SPEED = 5
+export const BALL_ANGLE_LIMITER = Math.PI / 5 // should be between 0 and pi
 
-// Drawing Settings
-export const BRICK_SCALING_WIDTH = 1/16
-export const BRICK_SCALING_HEIGHT = 1/6
-export const TEXTURE_FILEPATH_START = "./res/"
-export const TEXTURE_FILEPATH_END = "-Breakout-Tiles.png"
+// Brick Settings
+export const BRICK_WIDTH = 32
+export const BRICK_HEIGHT = 18
 
 // Player Settings
 export const PLAYER_START_HEIGHT = 50
