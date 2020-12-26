@@ -5,11 +5,10 @@
  * inside a certain range.
  */
 export class RangedInt{
-
     constructor(val, low, hi){
         this._low = low
         this._hi = hi
-        this.set(val)
+        this._val = this._getValInRange(val)
     }
 
     get(){
@@ -32,9 +31,11 @@ export class RangedInt{
         if (val > this._hi){
             return this._hi
         }
-        else if (val < this.low){
+        else if (val < this._low){
             return this._low
         }
-        return val
+        else{
+            return val
+        }
     }
 }
