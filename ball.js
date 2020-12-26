@@ -1,5 +1,8 @@
 import { ctx, canvas } from "./main.js";
 
+/**
+ * The Ball that the player uses to break bricks.
+ */
 export class Ball{
     constructor(x, y, velx, vely, radius, color){
         this.x = x
