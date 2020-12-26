@@ -1,4 +1,5 @@
-import { ctx, canvas } from "./main.js";
+import { ctx, canvas, particles } from "./main.js";
+import { Particle } from "./particle.js";
 
 /**
  * The Ball that the player uses to break bricks.

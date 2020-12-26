@@ -17,6 +17,7 @@ canvas.height = CANVAS_HEIGHT
 // Declare variables to be used in the game-loop
 export var bricks = []
 export var balls = []
+export var particles = []
 export var player = new Player()
 
 // Animation game-loop function
@@ -26,7 +27,15 @@ function animate() {
     ctx.fillStyle = 'white'
     ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT)
 
-    // Loop through gameBricks
+    // Loop through particles
+    particles.forEach((particle, index) => {
+        particle.update()
+        if (particle.alpha <= 0){
+            particles.splice(index, 1)
+        }
+    })
+
+    // Loop through bricks
     bricks.forEach((brick, index) => {
         brick.draw()
         brick.update()
@@ -37,7 +46,7 @@ function animate() {
         }
     })
 
-    // Loop through gameBalls
+    // Loop through balls
     balls.forEach((ball) => {
         ball.update()
         ball.draw()

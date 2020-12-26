@@ -17,6 +17,11 @@ export const PLAYER_HEIGHT = 15
 export const PLAYER_COLOR = "grey"
 export const PLAYER_SPEED = 4
 
+// Particle Settings
+export const FRICTION = 0.95
+export const PARTICLE_RADIUS = 1.5
+export const PARTICLE_SPEED = 4
+
 // Keys
 export const KEY_LEFT = 37
 export const KEY_RIGHT = 39
