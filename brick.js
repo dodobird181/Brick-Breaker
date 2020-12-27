@@ -1,5 +1,5 @@
 import { RGBCol } from "./colors.js"
-import { BRICK_WIDTH, BRICK_HEIGHT, PARTICLE_RADIUS, BALL_SPEED } from "./constants.js"
+import { BRICK_WIDTH, BRICK_HEIGHT, PARTICLE_RADIUS, BALL_SPEED, PARTICLES_PER_BRICK, BRICK_BORDER_WIDTH } from "./constants.js"
 import { Health } from "./health.js"
 import { balls, ctx, particles } from "./main.js"
 import { Particle } from "./particle.js"
@@ -9,7 +9,7 @@ export class Brick extends Rect{
 
     constructor(x, y, rgbCol){
         super(x, y, BRICK_WIDTH, BRICK_HEIGHT, rgbCol.toString())
-        this.health = new Health(2)
+        this.health = new Health(1)
         this.alpha = 1.0
         rgbCol.darken(120)
         this.borderColor = rgbCol.toString()
@@ -35,7 +35,7 @@ export class Brick extends Rect{
         // Draw border outline
         ctx.strokeStyle = this.borderColor
         ctx.al
-        ctx.lineWidth = 2
+        ctx.lineWidth = BRICK_BORDER_WIDTH
         ctx.strokeRect(this.x, this.y, this.width, this.height)
 
         ctx.globalAlpha = 1.0
@@ -46,18 +46,13 @@ export class Brick extends Rect{
      */
     _onBallHit(ball){
 
-        // If the brick has full health, give it a "broken" texture.
-        if (this.health.get() == 2){
-            this.alpha = 0.3
-        }
-
         // Deincrement the brick's health
         setTimeout(() => {
             this.health.deincrement()
         }, 1)
 
         // Spawn particles
-        for(var i = 0; i < 5; i++){
+        for(var i = 0; i < PARTICLES_PER_BRICK; i++){
             particles.push(new Particle(
                 ball.x, 
                 ball.y, 
