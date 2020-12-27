@@ -3,12 +3,19 @@ import { RGBCol } from "./colors.js"
 import { BRICK_BORDER_WIDTH, BRICK_HEIGHT, BRICK_WIDTH } from "./constants.js"
 import { bricks, ctx } from "./main.js"
 
-
+/**
+ * A level loader that loads level data from .png files 
+ * into Brick-Breaker levels.
+ */
 export class LevelLoader{
     constructor(bricks){
         this.bricks = bricks
     }
 
+    /**
+     * Load a .png level into the main bricks array.
+     * @param {*} src the filepath of the .png level to be loaded.
+     */
     load(src){
 
         // Load image
@@ -70,13 +77,5 @@ export class LevelLoader{
                 }
             }
         }
-    }
-}
-
-
-class Level{
-    constructor(levelMap, colorMap){
-        this.levelMap = levelMap
-        this.colorMap = colorMap
     }
 }
