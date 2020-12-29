@@ -1,5 +1,7 @@
-import { ctx, canvas, particles } from "./main.js";
+import { CANVAS_HEIGHT } from "./constants.js";
+import { ctx, canvas, particles, player } from "./main.js";
 import { Particle } from "./particle.js";
+import { Some } from "./utils/option.js";
 
 /**
  * The Ball that the player uses to break bricks.
@@ -12,12 +14,21 @@ export class Ball{
         this.vely = vely
         this.radius = radius
         this.color = color
+
+        this.needsRemoval = false
     }
 
     update(){
         this.x += this.velx
         this.y += this.vely
         this.bounceOffWalls()
+        
+        // When a ball hits the ground
+        if (this.y + this.radius >= CANVAS_HEIGHT){
+            player.healthDisplay.deincrement()
+            this.needsRemoval = true
+            player.spawnBall()
+        }
     }
 
     draw(){

@@ -1,6 +1,9 @@
-import { BALL_ANGLE_LIMITER, BALL_SPEED, CANVAS_HEIGHT, CANVAS_WIDTH, KEY_A, KEY_D, KEY_LEFT, KEY_RIGHT, PLAYER_COLOR, PLAYER_HEIGHT, PLAYER_SPEED, PLAYER_START_HEIGHT, PLAYER_WIDTH } from "./constants.js"
+import { Ball } from "./ball.js"
+import { BALL_ANGLE_LIMITER, BALL_RADIUS, BALL_SPEED, CANVAS_HEIGHT, CANVAS_WIDTH, KEY_A, KEY_D, KEY_LEFT, KEY_RIGHT, PLAYER_COLOR, PLAYER_HEIGHT, PLAYER_SPEED, PLAYER_START_HEIGHT, PLAYER_WIDTH } from "./constants.js"
+import { Health, PlayerHealthDisplay } from "./health.js"
 import { balls } from "./main.js"
 import { Rect } from "./rect.js"
+import { None, Some } from "./utils/option.js"
 
 /**
  * Player is the controllable platform that is used to deflect
@@ -9,7 +12,7 @@ import { Rect } from "./rect.js"
 export class Player extends Rect{
 	constructor(){
 		super(
-			CANVAS_WIDTH / 2,
+			(CANVAS_WIDTH / 2) - (PLAYER_WIDTH / 2),
 			CANVAS_HEIGHT - PLAYER_START_HEIGHT,
 			PLAYER_WIDTH,
 			PLAYER_HEIGHT,
@@ -22,12 +25,22 @@ export class Player extends Rect{
 
 		this.velx = 0
 		this.vely = 0
+
+		// Setup player's health
+		this.healthDisplay = new PlayerHealthDisplay()
+
+		// Ball slot for stationary balls on the player's platform
+		this.ballSlot = new None()
+
+		this.spawnBall()
 	}
 
 	update(){
 
-		const centerX = this.x + PLAYER_WIDTH / 2
-		const centerY = this.y + PLAYER_HEIGHT / 2
+		this.healthDisplay.draw()
+
+		var centerX = this.x + PLAYER_WIDTH / 2
+		var centerY = this.y + PLAYER_HEIGHT / 2
 
 		// Handle ball collisions
 		balls.forEach(ball => {
@@ -56,6 +69,30 @@ export class Player extends Rect{
 		// Update position
 		this.x += this.velx
 		this.y += this.vely
+
+		// Update ball slot's position
+		if (this.ballSlot.isPresent()){
+			var ball = this.ballSlot.get()
+			ball.x += this.velx
+			ball.y += this.vely
+		}
+	}
+
+	/* 
+	 * Spawns a stationary ball inside the player's ballSlot
+	 * to be launched by the player.
+	 */
+	spawnBall(){
+		const ball = new Ball(
+			this.x + PLAYER_WIDTH / 2, 
+			this.y - 10, 
+			0, 
+			0, 
+			BALL_RADIUS, 
+			"white"
+		)
+		this.ballSlot = new Some(ball)
+		balls.push(ball)
 	}
 
 	handleKeyDownEvent(event){
@@ -65,6 +102,16 @@ export class Player extends Rect{
 		}
 		else if(this._isRightKey(key)){
 			this.rightKeyDown = true
+		}
+
+		// Launch the ball in the ballSlot
+		else if(key == 32){
+			if (this.ballSlot.isPresent()){
+				const ball = this.ballSlot.get()
+				ball.vely = BALL_SPEED
+				ball.velx = (Math.random() - 0.5)
+				this.ballSlot = new None()
+			}
 		}
 		this.updateVelocity()
 	}

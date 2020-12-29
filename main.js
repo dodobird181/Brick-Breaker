@@ -9,13 +9,17 @@ export const canvas = document.querySelector('canvas')
 export const ctx = canvas.getContext('2d')
 
 // Set canvas dimensions
-canvas.width = CANVAS_WIDTH
-canvas.height = CANVAS_HEIGHT
+canvas.width = canvas.clientWidth
+canvas.height = canvas.clientHeight
+
+console.log("width: " + canvas.width)
+console.log("height: " + canvas.height)
 
 // Declare variables to be used in the game-loop
 export var bricks = []
 export var balls = []
 export var particles = []
+export var texts = []
 export var player = new Player()
 
 // Animation game-loop function
@@ -45,9 +49,19 @@ function animate() {
     })
 
     // Loop through balls
-    balls.forEach((ball) => {
+    balls.forEach((ball, index) => {
         ball.update()
         ball.draw()
+        if (ball.needsRemoval){
+            setTimeout(() => {
+                balls.splice(index, 1)
+            }, 0)
+        }
+    })
+
+    // Draw texts 
+    texts.forEach(text => {
+        text.draw()
     })
 
     player.update()
@@ -68,9 +82,7 @@ function handleKeyUpEvent(event){
 window.addEventListener("keydown", handleKeyDownEvent, false)
 window.addEventListener("keyup", handleKeyUpEvent, false)
 
-balls.push(new Ball(canvas.width, canvas.height, BALL_SPEED, BALL_SPEED, 5, "white"))
-
-animate()
-
 var lLoader = new LevelLoader(bricks)
 lLoader.load("./levels/2.png")
+
+animate()

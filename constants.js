@@ -4,6 +4,7 @@ export const CANVAS_HEIGHT = 460
 
 // Ball(s) Settings
 export const BALL_SPEED = 5
+export const BALL_RADIUS = 5
 export const BALL_ANGLE_LIMITER = Math.PI / 5 // should be between 0 and pi
 
 // Brick Settings
@@ -17,6 +18,12 @@ export const PLAYER_WIDTH = 100
 export const PLAYER_HEIGHT = 15
 export const PLAYER_COLOR = "white"
 export const PLAYER_SPEED = 4
+
+// Health Display Settings
+export const HEART_IMAGE_SRC = "./images/heart.png"
+export const HEART_SIZE = 20
+export const HEART_WALL_PADDING = 10
+export const HEART_SELF_PADDING = 6
 
 // Particle Settings
 export const FRICTION = 0.95
