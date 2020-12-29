@@ -1,7 +1,7 @@
 import { Ball } from "./ball.js"
 import { BALL_ANGLE_LIMITER, BALL_RADIUS, BALL_SPEED, CANVAS_HEIGHT, CANVAS_WIDTH, KEY_A, KEY_D, KEY_LEFT, KEY_RIGHT, PLAYER_COLOR, PLAYER_HEIGHT, PLAYER_SPEED, PLAYER_START_HEIGHT, PLAYER_WIDTH } from "./constants.js"
-import { Health, PlayerHealthDisplay } from "./health.js"
 import { balls } from "./main.js"
+import { PlayerHealthDisplay } from "./player_health_display.js"
 import { Rect } from "./rect.js"
 import { None, Some } from "./utils/option.js"
 
