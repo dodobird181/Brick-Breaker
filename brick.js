@@ -1,9 +1,9 @@
-import { RGBCol } from "./colors.js"
-import { BRICK_WIDTH, BRICK_HEIGHT, PARTICLE_RADIUS, BALL_SPEED, PARTICLES_PER_BRICK, BRICK_BORDER_WIDTH } from "./constants.js"
+import { BRICK_WIDTH, BRICK_HEIGHT, PARTICLE_RADIUS, BALL_SPEED, PARTICLES_PER_BRICK, BRICK_BORDER_WIDTH, S_BRICK } from "./constants.js"
 import { Health } from "./health.js"
-import { balls, ctx, particles } from "./main.js"
+import { ctx, gameScene } from "./main.js"
 import { Particle } from "./particle.js"
 import { Rect } from "./rect.js"
+import { playSound } from "./sound.js"
 
 export class Brick extends Rect{
 
@@ -18,9 +18,10 @@ export class Brick extends Rect{
     update(){
 
         // Collide with balls
-        balls.forEach(ball => {
+        gameScene.balls.forEach(ball => {
             if (this.colliding(ball)){
                 this.bounceBallOffMe(ball)
+                playSound(S_BRICK)
             }
         })
     }
@@ -53,7 +54,7 @@ export class Brick extends Rect{
 
         // Spawn particles
         for(var i = 0; i < PARTICLES_PER_BRICK; i++){
-            particles.push(new Particle(
+            gameScene.particles.push(new Particle(
                 ball.x, 
                 ball.y, 
                 PARTICLE_RADIUS * Math.random(),

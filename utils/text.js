@@ -10,7 +10,6 @@ export class Text{
     }
 
     draw(){
-        console.log("go")
         ctx.font = this.font
         ctx.fillStyle = this.color
         ctx.fillText(this.message, this.x, this.y)
@@ -23,4 +22,16 @@ export class Text{
     setItalic(){
         this.font = "italic " + this.font
     }
+}
+
+/**
+ * Returns the width of the text that the canvas
+ * would render if it was asked to execute 
+ * fillText(textMessage) with ctx.font = textFont.
+ * @param {*} textMessage
+ * @param {*} textFont 
+ */
+export function getTextWidth(textMessage, textFont){
+    ctx.font = textFont
+    return ctx.measureText(textMessage)
 }

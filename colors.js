@@ -17,4 +17,8 @@ export class RGBCol{
         this.g.set(this.g.get() - amt)
         this.b.set(this.b.get() - amt)
     }
+
+    lighten(amt){
+        this.darken(-amt)
+    }
 }

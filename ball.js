@@ -1,7 +1,6 @@
-import { CANVAS_HEIGHT } from "./constants.js";
-import { ctx, canvas, particles, player } from "./main.js";
-import { Particle } from "./particle.js";
-import { Some } from "./utils/option.js";
+import { CANVAS_HEIGHT, S_LOSE_LIFE, S_SIDE } from "./constants.js";
+import { ctx, canvas, gameScene } from "./main.js";
+import { playSound } from "./sound.js";
 
 /**
  * The Ball that the player uses to break bricks.
@@ -25,9 +24,10 @@ export class Ball{
         
         // When a ball hits the ground
         if (this.y + this.radius >= CANVAS_HEIGHT){
-            player.healthDisplay.deincrement()
+            gameScene.player.healthDisplay.deincrement()
             this.needsRemoval = true
-            player.spawnBall()
+            gameScene.player.spawnBall()
+            playSound(S_LOSE_LIFE)
         }
     }
 
@@ -47,15 +47,19 @@ export class Ball{
     bounceOffWalls(){
     	if (this.x - this.radius < 0){
             this.velx = Math.abs(this.velx)
+            playSound(S_SIDE)
     	}
     	else if (this.x + this.radius > canvas.width){
             this.velx = Math.abs(this.velx)*(-1)
+            playSound(S_SIDE)
     	}
     	else if (this.y - this.radius < 0){
             this.vely = Math.abs(this.vely)
+            playSound(S_SIDE)
     	}
     	else if (this.y + this.radius > canvas.height){
             this.vely = Math.abs(this.vely)*(-1)
+            playSound(S_SIDE)
     	}
     }
 }

@@ -1,3 +1,5 @@
+import { GameScene } from "./game_scene.js"
+
 // Canvas Settings
 export const CANVAS_WIDTH = 408
 export const CANVAS_HEIGHT = 460
@@ -25,6 +27,12 @@ export const HEART_SIZE = 20
 export const HEART_WALL_PADDING = 10
 export const HEART_SELF_PADDING = 6
 
+// Timer Display Settings
+export const SECONDS_PER_LEVEL = 90
+export const TIMER_DISPLAY_PADDING = 8
+export const TIMER_FONT = "Courier New"
+export const TIMER_FONT_SIZE = 15
+
 // Particle Settings
 export const FRICTION = 0.95
 export const PARTICLE_RADIUS = 1.5
@@ -36,3 +44,31 @@ export const KEY_LEFT = 37
 export const KEY_RIGHT = 39
 export const KEY_A = 65
 export const KEY_D = 68
+
+// Sounds
+export const S_BRICK = "./sounds/brick.wav"
+export const S_CLICK = "./sounds/click.wav"
+export const S_GAME_OVER = "./sounds/game_over.wav"
+export const S_HOVER = "./sounds/hover.wav"
+export const S_LEVEL_WIN = "./sounds/level_win.wav"
+export const S_LOSE_LIFE = "./sounds/lose_life.wav"
+export const S_PLAYER = "./sounds/player.wav"
+export const S_SIDE = "./sounds/side.wav"
+export const S_MENU = "./sounds/menu.mp3"
+
+// Levels
+export const LEVEL1 = new GameScene("./levels/1.png")
+export const LEVEL2 = new GameScene("./levels/2.png")
+export const LEVEL3 = new GameScene("./levels/3.png")
+export const LEVEL4 = new GameScene("./levels/4.png")
+export const LEVEL5 = new GameScene("./levels/5.png")
+export const LEVEL6 = new GameScene("./levels/6.png")
+export const LEVEL7 = new GameScene("./levels/7.png")
+export const LEVEL8 = new GameScene("./levels/8.png")
+export const LEVEL9 = new GameScene("./levels/9.png")
+export const LEVEL10 = new GameScene("./levels/10.png")
+export const LEVEL11 = new GameScene("./levels/11.png")
+export const LEVEL12 = new GameScene("./levels/12.png")
+export const LEVEL13 = new GameScene("./levels/13.png")
+export const LEVEL14 = new GameScene("./levels/14.png")
+export const LEVEL15 = new GameScene("./levels/15.png")

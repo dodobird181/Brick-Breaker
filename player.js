@@ -1,8 +1,10 @@
 import { Ball } from "./ball.js"
-import { BALL_ANGLE_LIMITER, BALL_RADIUS, BALL_SPEED, CANVAS_HEIGHT, CANVAS_WIDTH, KEY_A, KEY_D, KEY_LEFT, KEY_RIGHT, PLAYER_COLOR, PLAYER_HEIGHT, PLAYER_SPEED, PLAYER_START_HEIGHT, PLAYER_WIDTH } from "./constants.js"
-import { balls } from "./main.js"
+import { BALL_ANGLE_LIMITER, BALL_RADIUS, BALL_SPEED, CANVAS_HEIGHT, CANVAS_WIDTH, KEY_A, KEY_D, KEY_LEFT, KEY_RIGHT, PLAYER_COLOR, PLAYER_HEIGHT, PLAYER_SPEED, PLAYER_START_HEIGHT, PLAYER_WIDTH, S_PLAYER } from "./constants.js"
+import { gameScene } from "./main.js"
 import { PlayerHealthDisplay } from "./player_health_display.js"
+import { PlayerTimerDisplay } from "./player_timer_display.js"
 import { Rect } from "./rect.js"
+import { playSound } from "./sound.js"
 import { None, Some } from "./utils/option.js"
 
 /**
@@ -28,6 +30,7 @@ export class Player extends Rect{
 
 		// Setup player's health
 		this.healthDisplay = new PlayerHealthDisplay()
+		this.playerTimerDisplay = new PlayerTimerDisplay()
 
 		// Ball slot for stationary balls on the player's platform
 		this.ballSlot = new None()
@@ -38,12 +41,13 @@ export class Player extends Rect{
 	update(){
 
 		this.healthDisplay.draw()
+		this.playerTimerDisplay.draw()
 
 		var centerX = this.x + PLAYER_WIDTH / 2
 		var centerY = this.y + PLAYER_HEIGHT / 2
 
 		// Handle ball collisions
-		balls.forEach(ball => {
+		gameScene.balls.forEach(ball => {
 			if (this.colliding(ball)){
 				const diffX = ball.x - centerX
 				const diffY = ball.y - centerY
@@ -58,6 +62,7 @@ export class Player extends Rect{
 				const bounceVelY = BALL_SPEED * Math.sin(thetaTo)
 				ball.velx = bounceVelX
 				ball.vely = bounceVelY
+				playSound(S_PLAYER)
 			}
 		})
 
@@ -92,7 +97,7 @@ export class Player extends Rect{
 			"white"
 		)
 		this.ballSlot = new Some(ball)
-		balls.push(ball)
+		gameScene.balls.push(ball)
 	}
 
 	handleKeyDownEvent(event){

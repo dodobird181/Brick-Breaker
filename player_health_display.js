@@ -6,9 +6,6 @@ export class PlayerHealthDisplay{
     constructor(){
         this.heartImg = new Image()
         this.heartImg.src = HEART_IMAGE_SRC
-        this.heartImg.onload = function(){
-
-        }
         this.health = new Health(3)
     }
 

@@ -7,10 +7,114 @@
 	</head>
 
 	<body class="m-0 bg-white">
-		<h1 class="text-center p-6 select-none">
-			Brick Breaker
-		</h1>
-		<canvas class="block m-auto p-0 border-4 border-gray-600" width = "408" height="460"></canvas>
+
+		<div class="fixed inset-0 flex items-center justify-center select-none" id = "menuElement">
+			<div class = "bg-white max-w-md w-1/4 p-6 text-center mb-40">
+
+				<h1 class = "text-4xl font-bold leading-none" id = "titleElement">
+					Brick Breaker
+				</h1>
+				<p class = "text-sm text-gray-700 mb-4 mt-1" id = "subtitleElement">
+					By Samuel Morris
+				</p>
+				<div>
+					<button class = "bg-blue-500 text-white w-3/4 py-2 rounded-full text-sm" id = "startButton">
+						Start
+					</button>
+					<button class = "bg-blue-500 text-white w-3/4 py-2 mt-2 rounded-full text-sm" id = "levelSelectionButton">
+						Level Selection
+					</button>
+					<button class = "bg-blue-500 text-white w-3/4 py-2 mt-2 rounded-full text-sm" id = "infoButton">
+						Info
+					</button>
+				</div>
+			</div>
+		</div>
+
+		<div class="fixed flex inset-0 items-center justify-center select-none mb-40" id="levelSelectionElement">
+			<div class="grid grid-cols-5 gap-2 w-1/4 bg-white p-3">
+				<div><button
+					class = "bg-blue-500 text-white w-full py-2 rounded-md text-sm" 
+					id = "l1Button">
+					Level 1
+				</button></div>
+				<div><button 
+					class = "bg-blue-500 text-white w-full py-2 rounded-md text-sm" 
+					id = "l2Button">
+					Level 2
+				</button></div>
+				<div><button 
+					class = "bg-blue-500 text-white w-full py-2 rounded-md text-sm" 
+					id = "l3Button">
+					Level 3
+				</button></div>
+				<div><button 
+					class = "bg-blue-500 text-white w-full py-2 rounded-md text-sm" 
+					id = "l4Button">
+					Level 4
+				</button></div>
+				<div><button 
+					class = "bg-blue-500 text-white w-full py-2 rounded-md text-sm" 
+					id = "l5Button">
+					Level 5
+				</button></div>
+				<div><button 
+					class = "bg-blue-500 text-white w-full py-2 rounded-md text-sm" 
+					id = "l6Button">
+					Level 6
+				</button></div>
+				<div><button
+					class = "bg-blue-500 text-white w-full py-2 rounded-md text-sm" 
+					id = "l7Button">
+					Level 7
+				</button></div>
+				<div><button 
+					class = "bg-blue-500 text-white w-full py-2 rounded-md text-sm" 
+					id = "l8Button">
+					Level 8
+				</button></div>
+				<div><button 
+					class = "bg-blue-500 text-white w-full py-2 rounded-md text-sm" 
+					id = "l9Button">
+					Level 9
+				</button></div>
+				<div><button 
+					class = "bg-blue-500 text-white w-full py-2 rounded-md text-sm" 
+					id = "l10Button">
+					Level 10
+				</button></div>
+				<div><button 
+					class = "bg-blue-500 text-white w-full py-2 rounded-md text-sm" 
+					id = "l11Button">
+					Level 11
+				</button></div>
+				<div><button 
+					class = "bg-blue-500 text-white w-full py-2 rounded-md text-sm" 
+					id = "l12Button">
+					Level 12
+				</button></div>
+				<div><button 
+					class = "bg-blue-500 text-white w-full py-2 rounded-md text-sm" 
+					id = "l13Button">
+					Level 13
+				</button></div>
+				<div><button 
+					class = "bg-blue-500 text-white w-full py-2 rounded-md text-sm" 
+					id = "l14Button">
+					Level 14
+				</button></div>
+				<div><button 
+					class = "bg-blue-500 text-white w-full py-2 rounded-md text-sm" 
+					id = "l15Button">
+					Level 15
+				</button></div>
+			</div>
+		</div>
+
+		<canvas class="block m-auto mt-4 p-0 border-2 border-gray-600" width="408" height="460" id = "canvas">
+			Your browser does not support the canvas element :/
+		</canvas>
+
 	</body>
 
 	<!--Load javascript-->
