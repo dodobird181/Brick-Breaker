@@ -1,6 +1,6 @@
 import { CANVAS_HEIGHT, CANVAS_WIDTH, LEVEL1 } from "./constants.js"
 import { GameScene } from "./game_scene.js"
-import { ctx, gameScene, initilizeMenuButton, loadGameScene, loadScene } from "./main.js"
+import { ctx, gameScene, initilizeMenuButton, loadGameScene, loadScene, menuScene } from "./main.js"
 
 
 
@@ -19,6 +19,7 @@ export class LevelSelectionScene{
             const levelNum = i
             initilizeMenuButton(document.getElementById("l" + levelNum + "Button"), () => {
                 loadGameScene(levelNum)
+                menuScene.music.pause()
                 this.hide()
             })
         }

@@ -28,7 +28,7 @@ export const HEART_WALL_PADDING = 10
 export const HEART_SELF_PADDING = 6
 
 // Timer Display Settings
-export const SECONDS_PER_LEVEL = 90
+export const SECONDS_PER_LEVEL = 120
 export const TIMER_DISPLAY_PADDING = 8
 export const TIMER_FONT = "Courier New"
 export const TIMER_FONT_SIZE = 15
@@ -54,7 +54,8 @@ export const S_LEVEL_WIN = "./sounds/level_win.wav"
 export const S_LOSE_LIFE = "./sounds/lose_life.wav"
 export const S_PLAYER = "./sounds/player.wav"
 export const S_SIDE = "./sounds/side.wav"
-export const S_MENU = "./sounds/menu.mp3"
+export const S_MENU = "./sounds/menu.ogg"
+export const S_GAME = "./sounds/game.ogg"
 
 // Levels
 export const LEVEL1 = new GameScene("./levels/1.png")
