@@ -37,12 +37,26 @@ export class Track{
     }
 }
 
-export function playSound(src){
+/**
+ * Plays a sound.
+ * @param {*} src the filepath of the sound.
+ * @param {*} timeout the time to try and play again if
+ * the sound couldn't be played for some reason.
+ */
+export function playSound(src, timeout=1){
     var sound  = new Audio()
     var docSource  = document.createElement("source")
     docSource.type = "audio/wav"
     docSource.src  = src
     sound.appendChild(docSource)
-    sound.play()
+    try{
+        sound.play()
+    }
+    catch(err){
+        console.log("Could not play sound: " + src + ", trying again in " + timeout + "ms.")
+        setTimeout(() => {
+            playSound(src, timeout * 2)
+        }, timeout)
+    }
     return sound
 }
