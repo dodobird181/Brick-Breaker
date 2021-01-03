@@ -1,8 +1,7 @@
-import { Ball } from "./ball.js"
-import { BALL_SPEED, BRICK_BORDER_WIDTH, BRICK_HEIGHT, BRICK_WIDTH, CANVAS_HEIGHT, CANVAS_WIDTH } from "./constants.js"
-import { LevelLoader } from "./level_loader.js"
-import { Player } from "./player.js"
-
+import { S_CLICK, S_HOVER, S_MENU } from "./constants.js"
+import { GameScene } from "./game_scene.js"
+import { MenuScene } from "./menu_scene.js"
+import { playSound, Track } from "./sound.js"
 
 // Export Global Variables
 export const canvas = document.querySelector('canvas')
@@ -12,77 +11,90 @@ export const ctx = canvas.getContext('2d')
 canvas.width = canvas.clientWidth
 canvas.height = canvas.clientHeight
 
-console.log("width: " + canvas.width)
-console.log("height: " + canvas.height)
+var currentScene = null
+export var gameScene = new GameScene("./levels/1.png")
+export var menuScene = new MenuScene()
+var currentScene = menuScene
 
-// Declare variables to be used in the game-loop
-export var bricks = []
-export var balls = []
-export var particles = []
-export var texts = []
-export var player = new Player()
+export function loadScene(scene){
+    currentScene = scene
+}
+
+export function loadGameScene(levelNum){
+    gameScene = new GameScene("./levels/" + levelNum + ".png")
+    currentScene = gameScene
+}
 
 // Animation game-loop function
 function animate() {
-
     requestAnimationFrame(animate)
-    ctx.fillStyle = "rgba(0, 0, 0, 0.5)"
-    ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT)
-
-    // Loop through particles
-    particles.forEach((particle, index) => {
-        particle.update()
-        if (particle.alpha <= 0){
-            particles.splice(index, 1)
-        }
-    })
-
-    // Loop through bricks
-    bricks.forEach((brick, index) => {
-        brick.draw()
-        brick.update()
-        if (brick.health.isDead()){
-            setTimeout(() => {
-                bricks.splice(index, 1)
-            }, 0)
-        }
-    })
-
-    // Loop through balls
-    balls.forEach((ball, index) => {
-        ball.update()
-        ball.draw()
-        if (ball.needsRemoval){
-            setTimeout(() => {
-                balls.splice(index, 1)
-            }, 0)
-        }
-    })
-
-    // Draw texts 
-    texts.forEach(text => {
-        text.draw()
-    })
-
-    player.update()
-    player.draw()
+    currentScene.draw()
 }
 
 // Called whenever a key is pressed down
 function handleKeyDownEvent(event){
-    player.handleKeyDownEvent(event)
+    gameScene.player.handleKeyDownEvent(event)
 }
 
 // Called whenever a key is released
 function handleKeyUpEvent(event){
-    player.handleKeyUpEvent(event)
+    gameScene.player.handleKeyUpEvent(event)
 }
 
 // Add event listeners
 window.addEventListener("keydown", handleKeyDownEvent, false)
 window.addEventListener("keyup", handleKeyUpEvent, false)
 
-var lLoader = new LevelLoader(bricks)
-lLoader.load("./levels/2.png")
-
 animate()
+
+/**
+ * Initilizes the mouse-events, and style, of a single menu button.
+ * @param {*} buttonElement 
+ * @param {*} buttonClickAction
+ */
+export function initilizeMenuButton(buttonElement, buttonClickAction=() => {}){
+    buttonElement.onmouseover = (event) => {
+        playSound(S_HOVER)
+        buttonElement.style.backgroundColor = "rgb(37, 99, 235)"
+    }
+    buttonElement.onmouseleave = (event) => {
+        buttonElement.style.backgroundColor = "rgb(59, 130, 246)"
+    }
+    buttonElement.onclick = (event) => {
+        playSound(S_CLICK)
+        buttonElement.style.backgroundColor = "rgb(29, 78, 216)"
+        buttonClickAction()
+    }
+    buttonElement.style.backgroundColor = "rgb(59, 130, 246)"
+    buttonElement.style.border = "none"
+    buttonElement.style.outline = "none"
+}
+
+/**
+ * Hide an HTML element by element ID.
+ * @param {*} elementID 
+ */
+export function hideElement(elementID){
+    document.getElementById(elementID).style.display = "none"
+}
+
+/**
+ * Displays a popup message for the game.
+ * @param {*} message 
+ * @param {*} font_color 
+ * @param {*} font_size 
+ * @param {*} bg_color 
+ */
+export function displayGameMessage(message, font_color, font_size, bg_color){
+    var gm = document.getElementById("gameMessageElement")
+    gm.innerHTML = message
+    gm.style.fontSize = font_size
+    gm.style.backgroundColor = bg_color
+}
+
+/**
+ * Hides the popup game message.
+ */
+export function hideGameMessage(){
+    hideElement("gameMessageElement")
+}
