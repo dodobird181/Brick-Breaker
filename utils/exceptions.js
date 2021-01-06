@@ -11,3 +11,9 @@ export function InvalidClassInstance(pClass){
     return error
 }
 InvalidClassInstance.prototype = Object.create(Error.prototype)
+
+export function MissingFieldError(pClass, pField){
+    const error = new Error("'" + pClass + "' was expected to have field: '" + pField + "'.")
+    return error
+}
+InvalidClassInstance.prototype = Object.create(Error.prototype)

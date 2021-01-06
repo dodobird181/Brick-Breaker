@@ -8,7 +8,6 @@ import { ctx, gameScene } from "./main.js"
  * into Brick-Breaker levels.
  */
 export class LevelLoader{
-
     /**
      * Load a .png level into the main bricks array.
      * @param {*} src the filepath of the .png level to be loaded.

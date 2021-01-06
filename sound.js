@@ -1,3 +1,4 @@
+import { MissingFieldError } from "./utils/exceptions.js"
 
 
 
@@ -59,4 +60,20 @@ export function playSound(src, timeout=1){
         }, timeout)
     }
     return sound
+}
+
+/**
+ * Plays the sound, or optionally does not
+ * play the sound if the
+ * @param {*} caller The object that is playing the sound. 
+ * @param {*} sound The sound to be played.
+ */
+export function playSoundOrMute(caller, sound){
+    if (caller.muted == undefined){
+        throw new MissingFieldError(caller.constructor.name, "muted")
+    }
+    else if (!caller.muted){
+        console.log("playing sound: " + sound)
+        playSound(sound)
+    }
 }

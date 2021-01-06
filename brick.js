@@ -3,32 +3,31 @@ import { Health } from "./health.js"
 import { ctx, gameScene } from "./main.js"
 import { Particle } from "./particle.js"
 import { Rect } from "./rect.js"
-import { playSound } from "./sound.js"
+import { playSoundOrMute } from "./sound.js"
 
 export class Brick extends Rect{
 
     constructor(x, y, rgbCol){
         super(x, y, BRICK_WIDTH, BRICK_HEIGHT, rgbCol.toString())
         this.health = new Health(1)
-        this.alpha = 1.0
         rgbCol.darken(120)
         this.borderColor = rgbCol.toString()
+        this.muted = false
     }
 
     update(){
 
         // Collide with balls
         gameScene.balls.forEach(ball => {
-            if (this.colliding(ball)){
+            if (this.colliding(ball) && this.health.isDead() == false){
                 this.bounceBallOffMe(ball)
-                playSound(S_BRICK)
+                playSoundOrMute(ball, S_BRICK)
+                this._onBallHit(ball)
             }
         })
     }
 
     draw(){
-
-        ctx.globalAlpha = this.alpha
 
         // Draw brick
         super.draw()
@@ -38,8 +37,6 @@ export class Brick extends Rect{
         ctx.al
         ctx.lineWidth = BRICK_BORDER_WIDTH
         ctx.strokeRect(this.x, this.y, this.width, this.height)
-
-        ctx.globalAlpha = 1.0
     }
 
     /**
@@ -76,22 +73,18 @@ export class Brick extends Rect{
         if (ball.y > this.y && ball.y < this.y + this.height){//collision in dim y
             if (ball.x < this.x){//ball hit left side
                 ball.velx = Math.abs(ball.velx)*(-1)
-                this._onBallHit(ball)
             }
             else if (ball.x > this.x + this.width){//ball hit right side
                 ball.velx = Math.abs(ball.velx)
-                this._onBallHit(ball)
             }
         }
         else if (ball.x > this.x && ball.x < this.x + this.width)//collision in dim x
         {
             if (ball.y < this.y){//ball hit top
                 ball.vely = Math.abs(ball.vely)*(-1)
-                this._onBallHit(ball)
             }
             else if (ball.y > this.y + this.height){//ball hit bottom
                 ball.vely = Math.abs(ball.vely)
-                this._onBallHit(ball)
             }
         }
     }

@@ -25,6 +25,10 @@ export function loadGameScene(levelNum){
     currentScene = gameScene
 }
 
+export function setGameScene(gameSceneInstance){
+    gameScene = gameSceneInstance
+}
+
 // Animation game-loop function
 function animate() {
     requestAnimationFrame(animate)

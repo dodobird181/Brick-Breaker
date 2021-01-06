@@ -21,6 +21,8 @@ export class Player extends Rect{
 			PLAYER_COLOR
 		)
 
+		this.muted = false
+
 		// Declare key logging variables
 		this.rightKeyDown = false
 		this.leftKeyDown = false
@@ -62,7 +64,9 @@ export class Player extends Rect{
 				const bounceVelY = BALL_SPEED * Math.sin(thetaTo)
 				ball.velx = bounceVelX
 				ball.vely = bounceVelY
-				playSound(S_PLAYER)
+				if (!this.muted){
+					playSound(S_PLAYER)
+				}
 			}
 		})
 
@@ -100,6 +104,17 @@ export class Player extends Rect{
 		gameScene.balls.push(ball)
 	}
 
+	/**
+	 * Launches a ball from the Player's ballSlot
+	 * (if one exists)
+	 */
+	launchBall(){
+		const ball = this.ballSlot.get()
+		ball.vely = BALL_SPEED
+		ball.velx = (Math.random() - 0.5)
+		this.ballSlot = new None()
+	}
+
 	handleKeyDownEvent(event){
 		const key = event.keyCode
 		if (this._isLeftKey(key)){
@@ -112,10 +127,7 @@ export class Player extends Rect{
 		// Launch the ball in the ballSlot
 		else if(key == 32){
 			if (this.ballSlot.isPresent()){
-				const ball = this.ballSlot.get()
-				ball.vely = BALL_SPEED
-				ball.velx = (Math.random() - 0.5)
-				this.ballSlot = new None()
+				this.launchBall()
 			}
 		}
 		this.updateVelocity()
