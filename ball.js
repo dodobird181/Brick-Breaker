@@ -1,5 +1,5 @@
 import { CANVAS_HEIGHT, S_LOSE_LIFE, S_SIDE } from "./constants.js";
-import { ctx, canvas, gameScene } from "./main.js";
+import { ctx, canvas, manager } from "./main.js";
 import { playSoundOrMute } from "./sound.js";
 
 /**
@@ -25,9 +25,9 @@ export class Ball{
         
         // When a ball hits the ground
         if (this.y + this.radius >= CANVAS_HEIGHT){
-            gameScene.player.healthDisplay.deincrement()
+            manager.scene.player.healthDisplay.deincrement()
             this.needsRemoval = true
-            gameScene.player.spawnBall()
+            manager.scene.player.spawnBall()
             playSoundOrMute(this, S_LOSE_LIFE)
         }
     }

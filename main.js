@@ -1,8 +1,7 @@
-import { S_CLICK, S_HOVER, S_MENU } from "./constants.js"
-import { GameScene } from "./game_scene.js"
+import { S_CLICK, S_HOVER } from "./constants.js"
 import { MenuScene } from "./menu_scene.js"
-import { playSound, Track } from "./sound.js"
-import { None } from "./utils/option.js"
+import { SceneManager } from "./scene_manager.js"
+import { playSound } from "./sound.js"
 
 // Export Global Variables
 export const canvas = document.querySelector('canvas')
@@ -13,55 +12,8 @@ canvas.width = canvas.clientWidth
 canvas.height = canvas.clientHeight
 
 /**
- * REWRITE BEGINS HERE
- */
-var currentScene = null
-export var gameScene = new GameScene("./levels/1.png")
-export var menuScene = new MenuScene()
-var currentScene = menuScene
-
-export function loadScene(scene){
-    currentScene = scene
-}
-
-export function loadGameScene(levelNum){
-    gameScene = new GameScene("./levels/" + levelNum + ".png")
-    currentScene = gameScene
-}
-
-export function setGameScene(gameSceneInstance){
-    gameScene = gameSceneInstance
-}
-
-/**
- * REWRITE ENDS
- */
-
-// Animation game-loop function
-function animate() {
-    requestAnimationFrame(animate)
-    currentScene.draw()
-}
-
-// Called whenever a key is pressed down
-function handleKeyDownEvent(event){
-    gameScene.player.handleKeyDownEvent(event)
-}
-
-// Called whenever a key is released
-function handleKeyUpEvent(event){
-    gameScene.player.handleKeyUpEvent(event)
-}
-
-// Add event listeners
-window.addEventListener("keydown", handleKeyDownEvent, false)
-window.addEventListener("keyup", handleKeyUpEvent, false)
-
-animate()
-
-/**
  * Initilizes the mouse-events, and style, of a single menu button.
- * @param {*} buttonElement 
+ * @param {*} buttonElement
  * @param {*} buttonClickAction
  */
 export function initilizeMenuButton(buttonElement, buttonClickAction=() => {}){
@@ -83,11 +35,28 @@ export function initilizeMenuButton(buttonElement, buttonClickAction=() => {}){
 }
 
 /**
- * Hide an HTML element by element ID.
+ * Hides an HTML element by element ID.
  * @param {*} elementID 
  */
 export function hideElement(elementID){
     document.getElementById(elementID).style.display = "none"
+}
+
+/**
+ * Shows an HTML element by element ID.
+ * @param {*} elementID the ID of the HTML element to show.
+ * @param {*} display the display style (default == "flex").
+ */
+export function showElement(elementID, display="flex"){
+    document.getElementById(elementID).style.display = display
+}
+
+/**
+ * Returns an HTML element by ID.
+ * @param {*} elementID the HTML element's ID.
+ */
+export function findElement(elementID){
+    return document.getElementById(elementID)
 }
 
 /**
@@ -102,6 +71,7 @@ export function displayGameMessage(message, font_color, font_size, bg_color){
     gm.innerHTML = message
     gm.style.fontSize = font_size
     gm.style.backgroundColor = bg_color
+    //TODO not finished writing this method...
 }
 
 /**
@@ -111,24 +81,12 @@ export function hideGameMessage(){
     hideElement("gameMessageElement")
 }
 
-export class SceneHandler{
-    constructor(){
-        this.sceneStack = []
-        this.trackStack = []
-    }
-
-    /**
-     * Draws the top scene on the sceneStack.
-     */
-    draw(){
-        this._peek(this.sceneStack).draw()
-    }
-
-    /**
-     * Returns the top element of a stack.
-     * @param {*} stack 
-     */
-    _peek(stack){
-        return stack[stack.length-1]
-    }
+/**
+ * Start game.
+ */
+export var manager = new SceneManager(new MenuScene())
+function animate() {
+    requestAnimationFrame(animate)
+    manager.draw()
 }
+animate()

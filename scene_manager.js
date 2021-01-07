@@ -1,3 +1,4 @@
+import { GameScene } from "./game_scene.js"
 import { RangedInt } from "./utils/ranged_int.js"
 
 /**

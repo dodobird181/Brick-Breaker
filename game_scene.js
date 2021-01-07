@@ -1,6 +1,6 @@
 import { CANVAS_HEIGHT, CANVAS_WIDTH, S_GAME } from "./constants.js"
 import { LevelLoader } from "./level_loader.js"
-import { ctx } from "./main.js"
+import { ctx, manager } from "./main.js"
 import { Player } from "./player.js"
 import { Track } from "./sound.js"
 
@@ -31,6 +31,15 @@ export class GameScene{
         this.player = new Player()
         var lLoader = new LevelLoader()
         lLoader.load(this.levelSrc)
+
+        window.addEventListener("keydown", this.handleKeyDownEvent, false)
+        window.addEventListener("keyup", this.handleKeyUpEvent, false)
+    }
+    handleKeyDownEvent(event){
+        manager.scene.player.handleKeyDownEvent(event)
+    }
+    handleKeyUpEvent(event){
+        manager.scene.player.handleKeyUpEvent(event)
     }
 
     draw(){

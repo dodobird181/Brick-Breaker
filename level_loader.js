@@ -1,13 +1,16 @@
 import { Brick } from "./brick.js"
 import { RGBCol } from "./colors.js"
 import { BRICK_BORDER_WIDTH, BRICK_HEIGHT, BRICK_WIDTH } from "./constants.js"
-import { ctx, gameScene } from "./main.js"
+import { ctx, manager } from "./main.js"
 
 /**
  * A level loader that loads level data from .png files 
  * into Brick-Breaker levels.
  */
 export class LevelLoader{
+    constructor(){
+        this.onload = () => {}
+    }
     /**
      * Load a .png level into the main bricks array.
      * @param {*} src the filepath of the .png level to be loaded.
@@ -21,6 +24,7 @@ export class LevelLoader{
         var colorMap = []
         var levelMap = []
 
+        var postFn = this.onload
         img.onload = function(){
 
             // Parse image data into a "level map" and "color map"
@@ -59,7 +63,7 @@ export class LevelLoader{
             for(var i = 0; i < 23; i++){
                 for(var j = 0; j < 12; j++){
                     if (levelArr[i][j] == 1){
-                        gameScene.bricks.push(new Brick(
+                        manager.scene.bricks.push(new Brick(
                             j * bWidth + 1,
                             i * bHeight + 1,
                             new RGBCol(
@@ -72,6 +76,7 @@ export class LevelLoader{
                     }
                 }
             }
+            postFn()
         }
     }
 }

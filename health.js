@@ -37,7 +37,7 @@ export class Health{
     }
 
     checkForDeath(){
-        if (this._amt  <= 0){
+        if (this.isDead()){
             this.onDeath()
         }
     }
@@ -46,8 +46,6 @@ export class Health{
         if (this._amt  <= 0){
             return true
         }
-        else{
-            return false
-        }
+        return false
     }
 }

@@ -1,6 +1,6 @@
 import { BRICK_WIDTH, BRICK_HEIGHT, PARTICLE_RADIUS, BALL_SPEED, PARTICLES_PER_BRICK, BRICK_BORDER_WIDTH, S_BRICK } from "./constants.js"
 import { Health } from "./health.js"
-import { ctx, gameScene } from "./main.js"
+import { ctx, manager } from "./main.js"
 import { Particle } from "./particle.js"
 import { Rect } from "./rect.js"
 import { playSoundOrMute } from "./sound.js"
@@ -18,7 +18,7 @@ export class Brick extends Rect{
     update(){
 
         // Collide with balls
-        gameScene.balls.forEach(ball => {
+        manager.scene.balls.forEach(ball => {
             if (this.colliding(ball) && this.health.isDead() == false){
                 this.bounceBallOffMe(ball)
                 playSoundOrMute(ball, S_BRICK)
@@ -28,13 +28,10 @@ export class Brick extends Rect{
     }
 
     draw(){
-
         // Draw brick
         super.draw()
-
         // Draw border outline
         ctx.strokeStyle = this.borderColor
-        ctx.al
         ctx.lineWidth = BRICK_BORDER_WIDTH
         ctx.strokeRect(this.x, this.y, this.width, this.height)
     }
@@ -43,15 +40,13 @@ export class Brick extends Rect{
      * Handles the behavior of the brick when a ball hits it.
      */
     _onBallHit(ball){
-
         // Deincrement the brick's health
         setTimeout(() => {
             this.health.deincrement()
         }, 1)
-
         // Spawn particles
         for(var i = 0; i < PARTICLES_PER_BRICK; i++){
-            gameScene.particles.push(new Particle(
+            manager.scene.particles.push(new Particle(
                 ball.x, 
                 ball.y, 
                 PARTICLE_RADIUS * Math.random(),

@@ -4,6 +4,10 @@ import { GameScene } from "./game_scene.js"
 export const CANVAS_WIDTH = 408
 export const CANVAS_HEIGHT = 460
 
+// Menu Settings
+export const MENU_BACK_ALPHA = 0.4
+export const MENU_BRICK_RELOAD_RATIO = 1/5
+
 // Ball(s) Settings
 export const BALL_SPEED = 5
 export const BALL_RADIUS = 5
@@ -56,20 +60,3 @@ export const S_PLAYER = "./sounds/player.wav"
 export const S_SIDE = "./sounds/side.wav"
 export const S_MENU = "./sounds/menu.ogg"
 export const S_GAME = "./sounds/game.ogg"
-
-// Levels
-export const LEVEL1 = new GameScene("./levels/1.png")
-export const LEVEL2 = new GameScene("./levels/2.png")
-export const LEVEL3 = new GameScene("./levels/3.png")
-export const LEVEL4 = new GameScene("./levels/4.png")
-export const LEVEL5 = new GameScene("./levels/5.png")
-export const LEVEL6 = new GameScene("./levels/6.png")
-export const LEVEL7 = new GameScene("./levels/7.png")
-export const LEVEL8 = new GameScene("./levels/8.png")
-export const LEVEL9 = new GameScene("./levels/9.png")
-export const LEVEL10 = new GameScene("./levels/10.png")
-export const LEVEL11 = new GameScene("./levels/11.png")
-export const LEVEL12 = new GameScene("./levels/12.png")
-export const LEVEL13 = new GameScene("./levels/13.png")
-export const LEVEL14 = new GameScene("./levels/14.png")
-export const LEVEL15 = new GameScene("./levels/15.png")

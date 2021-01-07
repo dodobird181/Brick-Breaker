@@ -1,5 +1,3 @@
-
-
 /**
  * An integer that is only defined inclusively
  * inside a certain range.

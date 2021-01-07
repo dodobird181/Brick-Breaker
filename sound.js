@@ -1,5 +1,4 @@
 import { MissingFieldError } from "./utils/exceptions.js"
-import { None } from "./utils/option.js"
 
 export class Track{
     constructor(trackSrc){
@@ -63,14 +62,14 @@ export function playSound(src, timeout=1){
 /**
  * Plays the sound, or optionally does not
  * play the sound if the
- * @param {*} caller The object that is playing the sound. 
+ * @param {*} mutableCaller The mutable object that is playing the sound. 
  * @param {*} sound The sound to be played.
  */
-export function playSoundOrMute(caller, sound){
-    if (caller.muted == undefined){
-        throw new MissingFieldError(caller.constructor.name, "muted")
+export function playSoundOrMute(mutableCaller, sound){
+    if (mutableCaller.muted == undefined){
+        throw new MissingFieldError(mutableCaller.constructor.name, "muted")
     }
-    else if (!caller.muted){
+    else if (!mutableCaller.muted){
         console.log("playing sound: " + sound)
         playSound(sound)
     }
