@@ -1,7 +1,5 @@
 import { MissingFieldError } from "./utils/exceptions.js"
-
-
-
+import { None } from "./utils/option.js"
 
 export class Track{
     constructor(trackSrc){

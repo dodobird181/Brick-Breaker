@@ -21,6 +21,7 @@ export class MenuScene{
         // Hide unused HTML elements
         hideElement("levelSelectionElement")
         hideElement("gameMessageElement")
+        hideElement("startupWhiteOverlayElement")
 
         // Loads a new anonymouse implementation of "GameScene"
         // that displays some bricks and bounsing balls.
@@ -41,6 +42,9 @@ export class MenuScene{
             this.menuElement.style.opacity = "1"
             gameScene.draw()
         }
+
+        // Reloads the menuGameScene if most of the bricks have been broken.
+        if ()
     }
 
     /**
@@ -77,7 +81,7 @@ export class MenuScene{
 
 /**
  * Returns an anonymouse GameScene-esque class that
- * displays some balls bouncing around against bricks.
+ * displays some balls bouncing around against bricks for the menu.
  */
 function newMenuGameScene(){
     return new class P{
@@ -114,56 +118,33 @@ function newMenuGameScene(){
         }
 
         draw(){
+            ctx.globalAlpha = 0.35
 
-            // Hook for initially destroying some bricks
-            if (this.bricksDestroyed == false){
-                this.bricksDestroyed = true
-                //this.destroySomeBricks()
-            }
-            else{
-                ctx.globalAlpha = 0.35
-
-                // Draw bricks
-                this.bricks.forEach((brick, index) => {
-                    brick.draw()
-                    brick.update()
-                    if (brick.health.isDead()){
-                        setTimeout(() => {
-                            this.bricks.splice(index, 1)
-                        }, 0)
-                    }
-                })
-    
-                // Draw balls
-                this.balls.forEach((ball) => {
-                    ball.update()
-                    ball.draw()
-                })
-    
-                // Draw particles
-                this.particles.forEach((particle, index) => {
-                    particle.update()
-                    if (particle.alpha <= 0){
-                        this.particles.splice(index, 1)
-                    }
-                })
-                ctx.globalAlpha = 1   
-            }
-        }
-
-        /**
-         * Arbitrarily remove some bricks from the level.
-         */
-        destroySomeBricks(){
-            console.log()
-            const bricksLeft = 0.5
-            gameScene.bricks.forEach((brick, index) => {
-                if (Math.random() > bricksLeft){
+            // Draw bricks
+            this.bricks.forEach((brick, index) => {
+                brick.draw()
+                brick.update()
+                if (brick.health.isDead()){
                     setTimeout(() => {
-                        gameScene.bricks.splice(index, 1)
+                        this.bricks.splice(index, 1)
                     }, 0)
                 }
             })
+
+            // Draw balls
+            this.balls.forEach((ball) => {
+                ball.update()
+                ball.draw()
+            })
+
+            // Draw particles
+            this.particles.forEach((particle, index) => {
+                particle.update()
+                if (particle.alpha <= 0){
+                    this.particles.splice(index, 1)
+                }
+            })
+            ctx.globalAlpha = 1
         }
     }
 }
