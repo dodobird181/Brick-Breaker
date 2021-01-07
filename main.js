@@ -2,6 +2,7 @@ import { S_CLICK, S_HOVER, S_MENU } from "./constants.js"
 import { GameScene } from "./game_scene.js"
 import { MenuScene } from "./menu_scene.js"
 import { playSound, Track } from "./sound.js"
+import { None } from "./utils/option.js"
 
 // Export Global Variables
 export const canvas = document.querySelector('canvas')
@@ -11,6 +12,9 @@ export const ctx = canvas.getContext('2d')
 canvas.width = canvas.clientWidth
 canvas.height = canvas.clientHeight
 
+/**
+ * REWRITE BEGINS HERE
+ */
 var currentScene = null
 export var gameScene = new GameScene("./levels/1.png")
 export var menuScene = new MenuScene()
@@ -28,6 +32,10 @@ export function loadGameScene(levelNum){
 export function setGameScene(gameSceneInstance){
     gameScene = gameSceneInstance
 }
+
+/**
+ * REWRITE ENDS
+ */
 
 // Animation game-loop function
 function animate() {
@@ -101,4 +109,26 @@ export function displayGameMessage(message, font_color, font_size, bg_color){
  */
 export function hideGameMessage(){
     hideElement("gameMessageElement")
+}
+
+export class SceneHandler{
+    constructor(){
+        this.sceneStack = []
+        this.trackStack = []
+    }
+
+    /**
+     * Draws the top scene on the sceneStack.
+     */
+    draw(){
+        this._peek(this.sceneStack).draw()
+    }
+
+    /**
+     * Returns the top element of a stack.
+     * @param {*} stack 
+     */
+    _peek(stack){
+        return stack[stack.length-1]
+    }
 }
