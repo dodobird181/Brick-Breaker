@@ -4,6 +4,7 @@ import { LevelLoader } from "./level_loader.js";
 import { LevelSelectionScene } from "./level_selection_scene.js";
 import { ctx, manager, findElement, hideElement, initilizeMenuButton, showElement} from "./main.js";
 import { Player } from "./player.js";
+import { PlayerHealthDisplay } from "./player_health_display.js";
 import { Track, playSound } from "./sound.js";
 
 
@@ -50,7 +51,7 @@ export class MenuScene{
                 for(var i = 1; i < 16; i++){
                     const levelNum = i
                     initilizeMenuButton(document.getElementById("l" + levelNum + "Button"), () => {
-                        console.log("clicked level button")
+
                         manager.scene.music.pause()
                         manager.scene = []
                         manager.loadGameSceneAtLevel(levelNum)
@@ -74,17 +75,20 @@ export class MenuScene{
         this["bricks"] = []
         this["particles"] = []
 
-        //Avoids typeErrors in Ball-player interactions, the player is NOT drawn.
-        this["player"] = new Player()
-        this.player.spawnBall = () => {}// Remove ability of player to spawn new balls. TODO: potentially remove this player snippet
-        this.player.muted = true
+        // Add a "ghost" player to eliminate ball => player field access errors.
+        this["player"] = new class {
+            constructor(){
+                this.healthDisplay = new PlayerHealthDisplay()
+            }
+            spawnBall(){}
+        }
 
         // Load bricks
         var levelLoader = new LevelLoader()
         levelLoader.onload = () => {
             manager.scene["reloadRatio"] = MENU_BRICK_RELOAD_RATIO * manager.scene.bricks.length
         }
-        levelLoader.load("./levels/menu" + Math.floor((Math.random() * 3) + 1) + ".png")
+        levelLoader.load("./levels/menu" + Math.floor((Math.random() * 4) + 1) + ".png")
 
         // Spawn some balls
         const NUM_BALLS = 3
