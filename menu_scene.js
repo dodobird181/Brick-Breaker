@@ -25,6 +25,8 @@ export class MenuScene{
     startMenu(event){
         if (!manager.scene.gameStarted){
 
+            window.removeEventListener("click", manager.scene.startMenu)
+
             // Load bricks, balls, etc.
             manager.scene.loadBackgroundDisplay()
 
@@ -48,7 +50,9 @@ export class MenuScene{
                 for(var i = 1; i < 16; i++){
                     const levelNum = i
                     initilizeMenuButton(document.getElementById("l" + levelNum + "Button"), () => {
+                        console.log("clicked level button")
                         manager.scene.music.pause()
+                        manager.scene = []
                         manager.loadGameSceneAtLevel(levelNum)
                         hideElement("levelSelectionElement")
                     })

@@ -70,7 +70,6 @@ export function playSoundOrMute(mutableCaller, sound){
         throw new MissingFieldError(mutableCaller.constructor.name, "muted")
     }
     else if (!mutableCaller.muted){
-        console.log("playing sound: " + sound)
         playSound(sound)
     }
 }
