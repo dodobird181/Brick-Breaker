@@ -141,9 +141,16 @@
 
 		<!--Win/Lose message element-->
 		<div class="fixed inset-0 flex items-center justify-center select-none" id="gameMessageElement">
-			<p class="p-6 font-bold text-4xl rounded-md mb-40">Game Over!</p>
+			<div class="bg-white rounded-lg w-3/8 mb-30 p-2">
+				<p class="font-bold text-4xl">Game Over!</p>
+				<div class="text-center p-2">
+					<button class = "bg-blue-500 text-white w-auto py-2 px-4 rounded-full text-sm" id = "levelDoneActionButton">Next Level</button>
+					<button class = "bg-blue-500 text-white w-auto py-2 px-4 rounded-full text-sm" id = "backButton">Main menu</button>
+				</div>
+			</div>
 		</div>
 
+		<!--This white overlay element covers HTML elements that haven't yet been hidden by js when the webpage first loads...-->
 		<div class="fixed flex inset-0 justify-center bg-white" id="startupWhiteOverlayElement"></div>
 
 	</body>
