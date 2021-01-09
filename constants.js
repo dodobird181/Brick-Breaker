@@ -1,5 +1,3 @@
-import { GameScene } from "./game_scene.js"
-
 // Canvas Settings
 export const CANVAS_WIDTH = 408
 export const CANVAS_HEIGHT = 460
@@ -59,4 +57,3 @@ export const S_LOSE_LIFE = "./sounds/lose_life.wav"
 export const S_PLAYER = "./sounds/player.wav"
 export const S_SIDE = "./sounds/side.wav"
 export const S_MENU = "./sounds/menu.ogg"
-export const S_GAME = "./sounds/game.ogg"

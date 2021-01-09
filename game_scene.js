@@ -1,4 +1,4 @@
-import { CANVAS_HEIGHT, CANVAS_WIDTH, S_GAME } from "./constants.js"
+import { CANVAS_HEIGHT, CANVAS_WIDTH } from "./constants.js"
 import { LevelLoader } from "./level_loader.js"
 import { ctx, manager } from "./main.js"
 import { Player } from "./player.js"
@@ -8,7 +8,7 @@ import { Track } from "./sound.js"
  * The main brick-breaker game.
  */
 export class GameScene{
-    constructor(levelSrc){
+    constructor(levelSrc, srcNum=1){
 
         this.levelSrc = levelSrc
         this.loaded = false
@@ -19,8 +19,9 @@ export class GameScene{
         this.particles = []
 
         // Play music
-        this.music = new Track(S_GAME)
-        this.music.play(0.05)
+        var trackNum = (srcNum % 4) + 1
+        this.music = new Track("./sounds/game" + trackNum + ".ogg")
+        this.music.play(0.025)
     }
 
     /**
