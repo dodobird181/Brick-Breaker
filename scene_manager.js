@@ -12,13 +12,17 @@ export class SceneManager{
      */
     constructor(pScene){
         this.scene = pScene
+        this.paused = false
+        this.lastLevelLoaded = 1
     }
 
     /**
      * Draws the scene stored inside the scene manager.
      */
     draw(){
-        this.scene.draw()
+        if (!this.paused){
+            this.scene.draw()
+        }
     }
 
     /**
@@ -28,7 +32,8 @@ export class SceneManager{
      */
     loadGameSceneAtLevel(levelNum){
         var rangedLevelNum = new RangedInt(levelNum, 1, 15)
-        this.scene = new GameScene("./levels/" + rangedLevelNum.get() + ".png")
+        this.scene = new GameScene("./levels/" + rangedLevelNum.get() + ".png", rangedLevelNum.get())
+        this.lastLevelLoaded = rangedLevelNum.get()
     }
 
     /**
@@ -40,4 +45,18 @@ export class SceneManager{
     }
 
     //pause, play functions that stop "draw" calls
+
+    /**
+     * Pauses the current scene.
+     */
+    pause(){
+        this.paused = true
+    }
+
+    /**
+     * Unpauses the current scene.
+     */
+    resume(){
+        this.paused = false
+    }
 }
