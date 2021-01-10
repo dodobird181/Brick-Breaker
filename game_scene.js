@@ -22,6 +22,9 @@ export class GameScene{
         var trackNum = (srcNum % 4) + 1
         this.music = new Track("./sounds/game" + trackNum + ".ogg")
         this.music.play(0.025)
+
+        // Ghost drawPlayer function to be replaced when the real Player is loaded
+        this.drawPlayer = () => {}
     }
 
     /**
@@ -29,8 +32,16 @@ export class GameScene{
      * the gameScene in their constructor.
      */
     postInit(){
-        this.player = new Player()
         var lLoader = new LevelLoader()
+        lLoader.onload = () => {
+            // Create the player after the level has loaded
+            manager.scene.player = new Player()
+            // Add hooks for drawing the player after the level has loaded
+            manager.scene.drawPlayer = () => {
+                manager.scene.player.update()
+                manager.scene.player.draw()
+            }
+        }
         lLoader.load(this.levelSrc)
 
         window.addEventListener("keydown", this.handleKeyDownEvent, false)
@@ -44,7 +55,6 @@ export class GameScene{
     }
 
     draw(){
-
         // Initial hook for loading GameScene-dependent objects
         if (this.loaded == false){
             this.loaded = true
@@ -83,8 +93,6 @@ export class GameScene{
                 }, 0)
             }
         })
-
-        this.player.update()
-        this.player.draw()
+        this.drawPlayer()
     }
 }
