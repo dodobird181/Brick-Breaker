@@ -1,6 +1,7 @@
 import { Ball } from "./ball.js"
 import { BALL_ANGLE_LIMITER, BALL_RADIUS, BALL_SPEED, CANVAS_HEIGHT, CANVAS_WIDTH, KEY_A, KEY_D, KEY_LEFT, KEY_RIGHT, PLAYER_COLOR, PLAYER_HEIGHT, PLAYER_SPEED, PLAYER_START_HEIGHT, PLAYER_WIDTH, S_PLAYER } from "./constants.js"
-import { manager } from "./main.js"
+import { findElement, hideElement, initilizeMenuButton, manager, showElement } from "./main.js"
+import { MenuScene } from "./menu_scene.js"
 import { PlayerHealthDisplay } from "./player_health_display.js"
 import { PlayerTimerDisplay } from "./player_timer_display.js"
 import { Rect } from "./rect.js"
@@ -85,6 +86,33 @@ export class Player extends Rect{
 			ball.x += this.velx
 			ball.y += this.vely
 		}
+	}
+
+	/**
+	 * Triggers when the player dies
+	 * (either by loss of life or timeout).
+	 */
+	onDeath(){
+		manager.pause()
+		findElement("levelDoneActionButton").innerHTML = "Retry?"
+		showElement("gameMessageElement")
+
+		// Init "Main Menu" button
+		initilizeMenuButton(findElement("backButton"), () => {
+			hideElement("gameMessageElement")
+			manager.scene.music.pause()
+			manager.loadScene(new MenuScene())
+			showElement("menuElement")
+			manager.resume()
+		})
+
+		// Init "Retry" button
+		initilizeMenuButton(findElement("levelDoneActionButton"), () => {
+			hideElement("gameMessageElement")
+			manager.scene.music.pause()
+			manager.loadGameSceneAtLevel(manager.lastLevelLoaded)
+			manager.resume()
+		})
 	}
 
 	/* 

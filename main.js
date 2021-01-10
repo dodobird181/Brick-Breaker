@@ -16,7 +16,7 @@ canvas.height = canvas.clientHeight
  * @param {*} buttonElement
  * @param {*} buttonClickAction
  */
-export function initilizeMenuButton(buttonElement, buttonClickAction=() => {}){
+export function initilizeMenuButton(buttonElement, buttonClickAction = () => {}){
     buttonElement.onmouseover = (event) => {
         playSound(S_HOVER)
         buttonElement.style.backgroundColor = "rgb(37, 99, 235)"

@@ -1,5 +1,5 @@
 import { Ball } from "./ball.js";
-import { BALL_RADIUS, BALL_SPEED, CANVAS_HEIGHT, CANVAS_WIDTH, MENU_BACK_ALPHA, MENU_BRICK_RELOAD_RATIO, S_CLICK, S_MENU } from "./constants.js";
+import { BALL_RADIUS, BALL_SPEED, CANVAS_HEIGHT, CANVAS_WIDTH, MENU_BACK_ALPHA, MENU_BRICK_RELOAD_RATIO, S_CLICK, S_LEVEL_WIN, S_MENU } from "./constants.js";
 import { LevelLoader } from "./level_loader.js";
 import { LevelSelectionScene } from "./level_selection_scene.js";
 import { ctx, manager, findElement, hideElement, initilizeMenuButton, showElement} from "./main.js";
@@ -33,7 +33,7 @@ export class MenuScene{
 
             // Play Sounds
             playSound(S_CLICK)
-            manager.scene.music.play(0.05)
+            manager.scene.music.play(0.025)
             manager.scene.gameStarted = true
 
             // Init Start button
@@ -51,7 +51,6 @@ export class MenuScene{
                 for(var i = 1; i < 16; i++){
                     const levelNum = i
                     initilizeMenuButton(document.getElementById("l" + levelNum + "Button"), () => {
-
                         manager.scene.music.pause()
                         manager.scene = []
                         manager.loadGameSceneAtLevel(levelNum)
@@ -124,6 +123,7 @@ export class MenuScene{
             // Reload the background display if there are not many bricks left
             if (manager.scene.bricks.length != 0){
                 if (manager.scene.bricks.length < this.reloadRatio){
+                    playSound(S_LEVEL_WIN)
                     this.loadBackgroundDisplay()
                 }
             }
