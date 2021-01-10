@@ -9,7 +9,7 @@ export const MENU_BRICK_RELOAD_RATIO = 1/5
 // Ball(s) Settings
 export const BALL_SPEED = 5
 export const BALL_RADIUS = 5
-export const BALL_ANGLE_LIMITER = Math.PI / 5 // should be between 0 and pi
+export const BALL_ANGLE_LIMITER = Math.PI / 3 // should be between 0 and pi
 
 // Brick Settings
 export const BRICK_WIDTH = 32
@@ -30,7 +30,7 @@ export const HEART_WALL_PADDING = 10
 export const HEART_SELF_PADDING = 6
 
 // Timer Display Settings
-export const SECONDS_PER_LEVEL = 120
+export const SECONDS_PER_LEVEL = 180
 export const TIMER_DISPLAY_PADDING = 8
 export const TIMER_FONT = "Courier New"
 export const TIMER_FONT_SIZE = 15
@@ -39,7 +39,7 @@ export const TIMER_FONT_SIZE = 15
 export const FRICTION = 0.95
 export const PARTICLE_RADIUS = 1.5
 export const PARTICLE_SPEED = 4
-export const PARTICLES_PER_BRICK = 6
+export const PARTICLES_PER_BRICK = 12
 
 // Keys
 export const KEY_LEFT = 37
