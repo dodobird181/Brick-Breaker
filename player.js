@@ -1,5 +1,6 @@
 import { Ball } from "./ball.js"
 import { BALL_ANGLE_LIMITER, BALL_RADIUS, BALL_SPEED, CANVAS_HEIGHT, CANVAS_WIDTH, KEY_A, KEY_D, KEY_LEFT, KEY_RIGHT, PLAYER_COLOR, PLAYER_HEIGHT, PLAYER_SPEED, PLAYER_START_HEIGHT, PLAYER_WIDTH, S_PLAYER } from "./constants.js"
+import { LevelLoader } from "./level_loader.js"
 import { findElement, hideElement, initilizeMenuButton, manager, showElement } from "./main.js"
 import { MenuScene } from "./menu_scene.js"
 import { PlayerHealthDisplay } from "./player_health_display.js"
@@ -86,6 +87,11 @@ export class Player extends Rect{
 			ball.x += this.velx
 			ball.y += this.vely
 		}
+
+		// Hook for triggering player win.
+		if (manager.scene.bricks.length == 0){
+			this.onWin()
+		}
 	}
 
 	/**
@@ -94,8 +100,18 @@ export class Player extends Rect{
 	 */
 	onDeath(){
 		manager.pause()
-		findElement("levelDoneActionButton").innerHTML = "Retry?"
+		showElement("levelDoneActionButton")//hidden when player wins on level 15
+		findElement("gameMessageElementText").innerHTML = "Game over!"
+		findElement("levelDoneActionButton").style.display = "inline-block"
 		showElement("gameMessageElement")
+
+		// Remove GameScene event listeners
+		window.removeEventListener("keydown", manager.scene.handleKeyDownEvent)
+		window.removeEventListener("keyup", manager.scene.handleKeyUpEvent)
+
+		// Name buttons
+		findElement("backButton").innerHTML = "Menu"
+		findElement("levelDoneActionButton").innerHTML = "Retry?"
 
 		// Init "Main Menu" button
 		initilizeMenuButton(findElement("backButton"), () => {
@@ -113,6 +129,48 @@ export class Player extends Rect{
 			manager.loadGameSceneAtLevel(manager.lastLevelLoaded)
 			manager.resume()
 		})
+	}
+
+	/**
+	 * Triggers when the player beats a level.
+	 */
+	onWin(){
+		manager.pause()
+		findElement("gameMessageElementText").innerHTML = "You win!"
+
+		// Remove GameScene event listeners
+		window.removeEventListener("keydown", manager.scene.handleKeyDownEvent)
+		window.removeEventListener("keyup", manager.scene.handleKeyUpEvent)
+
+		// Name buttons
+		findElement("backButton").innerHTML = "Menu"
+		findElement("levelDoneActionButton").innerHTML = "Next!"
+
+		if (manager.lastLevelLoaded == 15){
+			hideElement("levelDoneActionButton")
+		}
+		else{
+			findElement("levelDoneActionButton").style.display = "inline-block"
+		}
+
+		// Init "Main Menu" button
+		initilizeMenuButton(findElement("backButton"), () => {
+			hideElement("gameMessageElement")
+			manager.scene.music.pause()
+			manager.loadScene(new MenuScene())
+			showElement("menuElement")
+			manager.resume()
+		})
+
+		// Init "Next level?" button
+		initilizeMenuButton(findElement("levelDoneActionButton"), () => {
+			hideElement("gameMessageElement")
+			manager.scene.music.pause()
+			manager.loadGameSceneAtLevel(manager.lastLevelLoaded + 1)
+			manager.resume()
+		})
+
+		showElement("gameMessageElement")
 	}
 
 	/* 
@@ -139,7 +197,7 @@ export class Player extends Rect{
 	launchBall(){
 		const ball = this.ballSlot.get()
 		ball.vely = BALL_SPEED
-		ball.velx = (Math.random() - 0.5)
+		ball.velx = 0
 		this.ballSlot = new None()
 	}
 
