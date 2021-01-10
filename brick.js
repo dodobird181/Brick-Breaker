@@ -73,7 +73,7 @@ export class Brick extends Rect{
                 ball.velx = Math.abs(ball.velx)
             }
         }
-        else if (ball.x > this.x && ball.x < this.x + this.width)//collision in dim x
+        else if (ball.x + ball.radius > this.x && ball.x - ball.radius < this.x + this.width)//collision in dim x
         {
             if (ball.y < this.y){//ball hit top
                 ball.vely = Math.abs(ball.vely)*(-1)
