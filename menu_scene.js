@@ -1,10 +1,7 @@
 import { Ball } from "./ball.js";
 import { BALL_RADIUS, BALL_SPEED, CANVAS_HEIGHT, CANVAS_WIDTH, MENU_BACK_ALPHA, MENU_BRICK_RELOAD_RATIO, S_CLICK, S_LEVEL_WIN, S_MENU } from "./constants.js";
 import { LevelLoader } from "./level_loader.js";
-import { LevelSelectionScene } from "./level_selection_scene.js";
 import { ctx, manager, findElement, hideElement, initilizeMenuButton, showElement} from "./main.js";
-import { Player } from "./player.js";
-import { PlayerHealthDisplay } from "./player_health_display.js";
 import { Track, playSound } from "./sound.js";
 
 
@@ -42,6 +39,7 @@ export class MenuScene{
                 manager.loadGameSceneAtLevel(1)
                 hideElement("menuElement")
             })
+
             // Init Level Selection button
             initilizeMenuButton(findElement("levelSelectionButton"), () => {
                 //Toggle appropriate HTML elements
@@ -58,9 +56,17 @@ export class MenuScene{
                     })
                 }
             })
+            
             // Init Credits button
             initilizeMenuButton(findElement("creditsButton"), () => {
-                manager.loadScene(new CreditsScene())
+                hideElement("menuElement")
+                showElement("creditsDisplay")
+
+                // Init credits back button
+                initilizeMenuButton(findElement("creditsBackButton"), () => {
+                    hideElement("creditsDisplay")
+                    showElement("menuElement")
+                })
             })
         }
     }
@@ -74,17 +80,19 @@ export class MenuScene{
         this["bricks"] = []
         this["particles"] = []
 
-        // Add a "ghost" player to eliminate ball => player field access errors.
+        // Add a "ghost" player to eliminate ball => player field (and function call) access errors.
         this["player"] = new class {
             constructor(){
-                this.healthDisplay = new PlayerHealthDisplay()
+                this.healthDisplay = new class {
+                    deincrement(){}
+                }
             }
             spawnBall(){}
         }
 
         // Load bricks
         var levelLoader = new LevelLoader()
-        levelLoader.onload = () => {
+        levelLoader.onload = () => {// Used to calculate the number of bricks needed to refresh the menu display
             manager.scene["reloadRatio"] = MENU_BRICK_RELOAD_RATIO * manager.scene.bricks.length
         }
         levelLoader.load("./levels/menu" + Math.floor((Math.random() * 4) + 1) + ".png")
@@ -133,12 +141,14 @@ export class MenuScene{
             ctx.globalAlpha = MENU_BACK_ALPHA
             // Draw bricks
             this.bricks.forEach((brick, index) => {
-                brick.draw()
-                brick.update()
                 if (brick.health.isDead()){
                     setTimeout(() => {
                         this.bricks.splice(index, 1)
                     }, 0)
+                }
+                else{
+                    brick.draw()
+                    brick.update()
                 }
             })
             // Draw balls

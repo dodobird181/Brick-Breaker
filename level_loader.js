@@ -11,6 +11,7 @@ export class LevelLoader{
     constructor(){
         this.onload = () => {}
     }
+
     /**
      * Load a .png level into the main bricks array.
      * @param {*} src the filepath of the .png level to be loaded.

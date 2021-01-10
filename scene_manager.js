@@ -26,7 +26,7 @@ export class SceneManager{
     }
 
     /**
-     * 
+     * Loads a GameScene at a specified level.
      * @param {*} levelNum is the GameScene level we wish to load,
      * (eg. "3" loads level 3 of the game).
      */
