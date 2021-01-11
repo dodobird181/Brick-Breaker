@@ -25,6 +25,9 @@ export class GameScene{
 
         // Ghost drawPlayer function to be replaced when the real Player is loaded
         this.drawPlayer = () => {}
+
+        // Stores dead brick objects to be removed before the next draw call
+        this.deadBricks = []
     }
 
     /**
@@ -72,15 +75,19 @@ export class GameScene{
             }
         })
 
+        // Remove dead bricks before drawing
+        this.deadBricks.forEach(deadBrick => {
+            const i = this.bricks.indexOf(deadBrick)
+            if(i >= 0){
+                this.bricks.splice(i, 1)
+            }
+        })
+
         // Draw bricks
-        this.bricks.forEach((brick, index) => {
+        this.bricks.forEach(brick => {
             brick.draw()
             brick.update()
-            if (brick.health.isDead()){
-                setTimeout(() => {
-                    this.bricks.splice(index, 1)
-                }, 0)
-            }
+
         })
 
         // Draw balls

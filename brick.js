@@ -6,7 +6,6 @@ import { Rect } from "./rect.js"
 import { playSoundOrMute } from "./sound.js"
 
 export class Brick extends Rect{
-
     constructor(x, y, rgbCol){
         super(x, y, BRICK_WIDTH, BRICK_HEIGHT, rgbCol.toString())
         this.health = new Health(1)
@@ -16,15 +15,18 @@ export class Brick extends Rect{
     }
 
     update(){
-
         // Collide with balls
         manager.scene.balls.forEach(ball => {
             if (this.colliding(ball) && this.health.isDead() == false){
+                this.health.deincrement()
                 this.bounceBallOffMe(ball)
+                this._spawnParticles(ball)
                 playSoundOrMute(ball, S_BRICK)
-                this._onBallHit(ball)
             }
         })
+        if (this.health.isDead()){
+            manager.scene.deadBricks.push(this)
+        }
     }
 
     draw(){
@@ -37,14 +39,9 @@ export class Brick extends Rect{
     }
 
     /**
-     * Handles the behavior of the brick when a ball hits it.
+     * Spawns particles the color of this brick at the position of "ball".
      */
-    _onBallHit(ball){
-        // Deincrement the brick's health
-        setTimeout(() => {
-            this.health.deincrement()
-        }, 1)
-        // Spawn particles
+    _spawnParticles(ball){
         for(var i = 0; i < PARTICLES_PER_BRICK; i++){
             manager.scene.particles.push(new Particle(
                 ball.x, 
@@ -52,8 +49,8 @@ export class Brick extends Rect{
                 PARTICLE_RADIUS * Math.random(),
                 this.color,
                 {
-                    x: ball.velx / BALL_SPEED * Math.random(),
-                    y: ball.vely / BALL_SPEED * Math.random()
+                    x: ((ball.velx / BALL_SPEED) * Math.random()) + Math.random() - 0.5,
+                    y: ((ball.vely / BALL_SPEED) * Math.random()) + Math.random() - 0.5
                 }
             ))
         }
@@ -73,7 +70,7 @@ export class Brick extends Rect{
                 ball.velx = Math.abs(ball.velx)
             }
         }
-        else if (ball.x + ball.radius > this.x && ball.x - ball.radius < this.x + this.width)//collision in dim x
+        else if (ball.x > this.x && ball.x < this.x + this.width)//collision in dim x
         {
             if (ball.y < this.y){//ball hit top
                 ball.vely = Math.abs(ball.vely)*(-1)

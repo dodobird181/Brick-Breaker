@@ -18,6 +18,8 @@ export class MenuScene{
         hideElement("levelSelectionElement")
         hideElement("gameMessageElement")
         hideElement("startupWhiteOverlayElement")
+
+        this.deadBricks = []
     }
 
     startMenu(event){
@@ -139,23 +141,7 @@ export class MenuScene{
              * Draws the rest of the background display.
              */
             ctx.globalAlpha = MENU_BACK_ALPHA
-            // Draw bricks
-            this.bricks.forEach((brick, index) => {
-                if (brick.health.isDead()){
-                    setTimeout(() => {
-                        this.bricks.splice(index, 1)
-                    }, 0)
-                }
-                else{
-                    brick.draw()
-                    brick.update()
-                }
-            })
-            // Draw balls
-            this.balls.forEach((ball) => {
-                ball.update()
-                ball.draw()
-            })
+
             // Draw particles
             this.particles.forEach((particle, index) => {
                 particle.update()
@@ -163,6 +149,33 @@ export class MenuScene{
                     this.particles.splice(index, 1)
                 }
             })
+
+            // Remove dead bricks before drawing
+            this.deadBricks.forEach(deadBrick => {
+                const i = this.bricks.indexOf(deadBrick)
+                if(i >= 0){
+                    this.bricks.splice(i, 1)
+                }
+            })
+
+            // Draw bricks
+            this.bricks.forEach(brick => {
+                brick.draw()
+                brick.update()
+
+            })
+
+            // Draw balls
+            this.balls.forEach((ball, index) => {
+                ball.update()
+                ball.draw()
+                if (ball.needsRemoval){
+                    setTimeout(() => {
+                        this.balls.splice(index, 1)
+                    }, 0)
+                }
+            })
+            
             ctx.globalAlpha = 1
         }
     }
