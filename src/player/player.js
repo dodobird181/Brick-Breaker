@@ -1,13 +1,12 @@
-import { Ball } from "./ball.js"
-import { BALL_ANGLE_LIMITER, BALL_RADIUS, BALL_SPEED, CANVAS_HEIGHT, CANVAS_WIDTH, KEY_A, KEY_D, KEY_LEFT, KEY_RIGHT, PLAYER_COLOR, PLAYER_HEIGHT, PLAYER_SPEED, PLAYER_START_HEIGHT, PLAYER_WIDTH, S_PLAYER } from "./constants.js"
-import { LevelLoader } from "./level_loader.js"
-import { findElement, hideElement, initilizeMenuButton, manager, showElement } from "./main.js"
-import { MenuScene } from "./menu_scene.js"
+import { Ball } from "../ball.js"
+import { BALL_ANGLE_LIMITER, BALL_RADIUS, BALL_SPEED, CANVAS_HEIGHT, CANVAS_WIDTH, KEY_A, KEY_D, KEY_LEFT, KEY_RIGHT, PLAYER_COLOR, PLAYER_HEIGHT, PLAYER_SPEED, PLAYER_START_HEIGHT, PLAYER_WIDTH, S_PLAYER } from "../constants.js"
+import { findElement, hideElement, initilizeMenuButton, manager, showElement } from "../main.js"
+import { MenuScene } from "../scenes/menu_scene.js"
 import { PlayerHealthDisplay } from "./player_health_display.js"
 import { PlayerTimerDisplay } from "./player_timer_display.js"
-import { Rect } from "./rect.js"
-import { playSound } from "./sound.js"
-import { None, Some } from "./utils/option.js"
+import { Rect } from "../rect.js"
+import { playSound } from "../utils/sound.js"
+import { None, Some } from "../utils/option.js"
 
 /**
  * Player is the controllable platform that is used to deflect

@@ -1,8 +1,8 @@
-import { Ball } from "./ball.js";
-import { BALL_RADIUS, BALL_SPEED, CANVAS_HEIGHT, CANVAS_WIDTH, MENU_BACK_ALPHA, MENU_BRICK_RELOAD_RATIO, S_CLICK, S_LEVEL_WIN, S_MENU } from "./constants.js";
-import { LevelLoader } from "./level_loader.js";
-import { ctx, manager, findElement, hideElement, initilizeMenuButton, showElement} from "./main.js";
-import { Track, playSound } from "./sound.js";
+import { Ball } from "../ball.js";
+import { BALL_RADIUS, BALL_SPEED, CANVAS_HEIGHT, CANVAS_WIDTH, MENU_BACK_ALPHA, MENU_BRICK_RELOAD_RATIO, S_CLICK, S_LEVEL_WIN, S_MENU } from "../constants.js";
+import { LevelLoader } from "../level_loader.js";
+import { ctx, manager, findElement, hideElement, initilizeMenuButton, showElement} from "../main.js";
+import { Track, playSound } from "../utils/sound.js";
 
 
 export class MenuScene{

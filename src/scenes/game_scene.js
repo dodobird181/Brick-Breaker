@@ -1,8 +1,8 @@
-import { CANVAS_HEIGHT, CANVAS_WIDTH } from "./constants.js"
-import { LevelLoader } from "./level_loader.js"
-import { ctx, manager } from "./main.js"
-import { Player } from "./player.js"
-import { Track } from "./sound.js"
+import { CANVAS_HEIGHT, CANVAS_WIDTH } from "../constants.js"
+import { LevelLoader } from "../level_loader.js"
+import { ctx, manager } from "../main.js"
+import { Player } from "../player/player.js"
+import { Track } from "../utils/sound.js"
 
 /**
  * The main brick-breaker game.

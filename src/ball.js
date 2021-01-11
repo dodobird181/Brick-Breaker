@@ -1,6 +1,6 @@
 import { CANVAS_HEIGHT, S_LOSE_LIFE, S_SIDE } from "./constants.js";
 import { ctx, canvas, manager } from "./main.js";
-import { playSoundOrMute } from "./sound.js";
+import { playSoundOrMute } from "./utils/sound.js";
 
 /**
  * The Ball that the player uses to break bricks.

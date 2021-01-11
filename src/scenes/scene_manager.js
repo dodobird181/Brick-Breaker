@@ -1,5 +1,5 @@
 import { GameScene } from "./game_scene.js"
-import { RangedInt } from "./utils/ranged_int.js"
+import { RangedInt } from "../utils/ranged_int.js"
 
 /**
  * SceneManager is a wrapped-variable built to hold game "scenes",

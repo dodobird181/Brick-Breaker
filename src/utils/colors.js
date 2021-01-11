@@ -1,4 +1,4 @@
-import { RangedInt } from "./utils/ranged_int.js"
+import { RangedInt } from "./ranged_int.js"
 
 export class RGBCol{
     constructor(r, g, b, a=1.0){

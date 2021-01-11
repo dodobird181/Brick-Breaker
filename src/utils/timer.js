@@ -1,7 +1,7 @@
 
 /**
  * Timer is just "syntactic sugar" for Javascript's 
- * setInterval() function, with a reference for the
+ * setInterval() function, with a reference to the
  * "interval variable" so the timer can stop itself.
  */
 export class Timer{

@@ -1,6 +1,6 @@
-import { CANVAS_HEIGHT, HEART_IMAGE_SRC, HEART_SELF_PADDING, HEART_SIZE, HEART_WALL_PADDING } from "./constants.js"
-import { Health } from "./health.js"
-import { ctx, manager } from "./main.js"
+import { CANVAS_HEIGHT, HEART_IMAGE_SRC, HEART_SELF_PADDING, HEART_SIZE, HEART_WALL_PADDING } from "../constants.js"
+import { Health } from "../health.js"
+import { ctx, manager } from "../main.js"
 
 export class PlayerHealthDisplay{
     constructor(){

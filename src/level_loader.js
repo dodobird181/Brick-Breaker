@@ -1,5 +1,5 @@
 import { Brick } from "./brick.js"
-import { RGBCol } from "./colors.js"
+import { RGBCol } from "./utils/colors.js"
 import { BRICK_BORDER_WIDTH, BRICK_HEIGHT, BRICK_WIDTH } from "./constants.js"
 import { ctx, manager } from "./main.js"
 

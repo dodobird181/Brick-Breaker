@@ -1,7 +1,7 @@
 import { S_CLICK, S_HOVER } from "./constants.js"
-import { MenuScene } from "./menu_scene.js"
-import { SceneManager } from "./scene_manager.js"
-import { playSound } from "./sound.js"
+import { MenuScene } from "./scenes/menu_scene.js"
+import { SceneManager } from "./scenes/scene_manager.js"
+import { playSound } from "./utils/sound.js"
 
 // Export Global Variables
 export const canvas = document.querySelector('canvas')

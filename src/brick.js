@@ -3,7 +3,7 @@ import { Health } from "./health.js"
 import { ctx, manager } from "./main.js"
 import { Particle } from "./particle.js"
 import { Rect } from "./rect.js"
-import { playSoundOrMute } from "./sound.js"
+import { playSoundOrMute } from "./utils/sound.js"
 
 export class Brick extends Rect{
     constructor(x, y, rgbCol){

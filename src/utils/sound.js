@@ -1,4 +1,4 @@
-import { MissingFieldError } from "./utils/exceptions.js"
+import { MissingFieldError } from "./exceptions.js"
 
 export class Track{
     constructor(trackSrc){

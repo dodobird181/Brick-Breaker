@@ -1,5 +1,5 @@
-import { CANVAS_HEIGHT, CANVAS_WIDTH } from "./constants.js"
-import { ctx, manager, initilizeMenuButton, hideElement, showElement } from "./main.js"
+import { CANVAS_HEIGHT, CANVAS_WIDTH } from "../constants.js"
+import { ctx, manager, initilizeMenuButton, hideElement, showElement } from "../main.js"
 
 
 

@@ -1,7 +1,7 @@
-import { CANVAS_HEIGHT, CANVAS_WIDTH, SECONDS_PER_LEVEL, TIMER_DISPLAY_PADDING, TIMER_FONT, TIMER_FONT_SIZE } from "./constants.js";
-import { manager } from "./main.js";
-import { getTextWidth, Text } from "./utils/text.js";
-import { Timer } from "./utils/timer.js";
+import { CANVAS_HEIGHT, CANVAS_WIDTH, SECONDS_PER_LEVEL, TIMER_DISPLAY_PADDING, TIMER_FONT, TIMER_FONT_SIZE } from "../constants.js";
+import { manager } from "../main.js";
+import { getTextWidth, Text } from "../utils/text.js";
+import { Timer } from "../utils/timer.js";
 
 /**
  * PlayerTimerDisplay is the in-game text that displays
