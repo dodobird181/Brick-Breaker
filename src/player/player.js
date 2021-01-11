@@ -1,5 +1,5 @@
 import { Ball } from "../ball.js"
-import { BALL_ANGLE_LIMITER, BALL_RADIUS, BALL_SPEED, CANVAS_HEIGHT, CANVAS_WIDTH, KEY_A, KEY_D, KEY_LEFT, KEY_RIGHT, PLAYER_COLOR, PLAYER_HEIGHT, PLAYER_SPEED, PLAYER_START_HEIGHT, PLAYER_WIDTH, S_PLAYER } from "../constants.js"
+import { BALL_ANGLE_LIMITER, BALL_ANGLE_THRESHOLD_DIV, BALL_DIFF_THRESHOLD, BALL_RADIUS, BALL_SPEED, CANVAS_HEIGHT, CANVAS_WIDTH, KEY_A, KEY_D, KEY_LEFT, KEY_RIGHT, PLAYER_COLOR, PLAYER_HEIGHT, PLAYER_SPEED, PLAYER_START_HEIGHT, PLAYER_WIDTH, S_PLAYER } from "../constants.js"
 import { findElement, hideElement, initilizeMenuButton, manager, showElement } from "../main.js"
 import { MenuScene } from "../scenes/menu_scene.js"
 import { PlayerHealthDisplay } from "./player_health_display.js"
@@ -52,10 +52,16 @@ export class Player extends Rect{
 		// Handle ball collisions
 		manager.scene.balls.forEach(ball => {
 			if (this.colliding(ball)){
-				const diffX = ball.x - centerX
+				// Create a (centered) difference threshold that needs to be overcome
+				// for the ball to bounce off at an angle.
+				var diffX = ball.x - centerX
+				if (Math.abs(diffX) < BALL_DIFF_THRESHOLD){
+					diffX = diffX / BALL_ANGLE_THRESHOLD_DIV
+				}
 				const diffY = ball.y - centerY
 				var thetaTo = Math.atan2(diffY, diffX)
-				if (thetaTo > -BALL_ANGLE_LIMITER){//limit sideways bounces
+				// Limit the angle of sideways bounces
+				if (thetaTo > -BALL_ANGLE_LIMITER){
 					thetaTo = -BALL_ANGLE_LIMITER
 				}
 				else if (thetaTo < -Math.PI + BALL_ANGLE_LIMITER){

@@ -32,7 +32,7 @@ export class MenuScene{
 
             // Play Sounds
             playSound(S_CLICK)
-            manager.scene.music.play(0.025)
+            manager.scene.music.play(0.03)
             manager.scene.gameStarted = true
 
             // Init Start button

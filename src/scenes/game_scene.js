@@ -21,7 +21,7 @@ export class GameScene{
         // Play music
         var trackNum = (srcNum % 4) + 1
         this.music = new Track("./sounds/game" + trackNum + ".ogg")
-        this.music.play(0.025)
+        this.music.play(0.03)
 
         // Ghost drawPlayer function to be replaced when the real Player is loaded
         this.drawPlayer = () => {}

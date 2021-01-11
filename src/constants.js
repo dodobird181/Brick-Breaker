@@ -9,7 +9,9 @@ export const MENU_BRICK_RELOAD_RATIO = 1/5
 // Ball(s) Settings
 export const BALL_SPEED = 5
 export const BALL_RADIUS = 5
-export const BALL_ANGLE_LIMITER = Math.PI / 3 // should be between 0 and pi
+export const BALL_ANGLE_LIMITER = Math.PI / 5 // should be between 0 and pi
+export const BALL_DIFF_THRESHOLD = 20 // measured in pixels
+export const BALL_ANGLE_THRESHOLD_DIV = 2.6
 
 // Brick Settings
 export const BRICK_WIDTH = 32
@@ -37,9 +39,9 @@ export const TIMER_FONT_SIZE = 15
 
 // Particle Settings
 export const FRICTION = 0.95
-export const PARTICLE_RADIUS = 1.5
-export const PARTICLE_SPEED = 4
-export const PARTICLES_PER_BRICK = 12
+export const PARTICLE_RADIUS = 2
+export const PARTICLE_SPEED = 3
+export const PARTICLES_PER_BRICK = 20
 
 // Keys
 export const KEY_LEFT = 37
