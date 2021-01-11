@@ -169,11 +169,6 @@ export class MenuScene{
             this.balls.forEach((ball, index) => {
                 ball.update()
                 ball.draw()
-                if (ball.needsRemoval){
-                    setTimeout(() => {
-                        this.balls.splice(index, 1)
-                    }, 0)
-                }
             })
             
             ctx.globalAlpha = 1
