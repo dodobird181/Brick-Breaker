@@ -24,7 +24,7 @@ export class Ball{
         this.bounceOffWalls()
         
         // When a ball hits the ground
-        if (this.y + this.radius >= CANVAS_HEIGHT){
+        if (this.y + this.radius >= CANVAS_HEIGHT && this.needsRemoval == false){
             manager.scene.player.healthDisplay.deincrement()
             this.needsRemoval = true
             manager.scene.player.spawnBall()

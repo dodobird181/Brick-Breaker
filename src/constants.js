@@ -10,7 +10,7 @@ export const MENU_BRICK_RELOAD_RATIO = 1/5
 export const BALL_SPEED = 5
 export const BALL_RADIUS = 5
 export const BALL_ANGLE_LIMITER = Math.PI / 5 // should be between 0 and pi
-export const BALL_DIFF_THRESHOLD = 20 // measured in pixels
+export const BALL_DIFF_THRESHOLD = 25 // measured in pixels
 export const BALL_ANGLE_THRESHOLD_DIV = 2.6
 
 // Brick Settings
