@@ -4,7 +4,6 @@ Created a simplified version of the classic "Breakout" arcade game (Brick-Breake
 <div>
 <img src="https://github.com/dodobird181/Brick-Breaker/blob/main/screenshots/bbmenu.PNG" width="320" height="390">
 <img src="https://github.com/dodobird181/Brick-Breaker/blob/main/screenshots/bblevel.PNG" width="320" height="390">
-<img src="https://github.com/dodobird181/Brick-Breaker/blob/main/screenshots/bbselection.PNG" width="320" height="390">
 </div>
 
 ### Goals
