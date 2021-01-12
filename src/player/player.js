@@ -15,7 +15,7 @@ import { None, Some } from "../utils/option.js"
 export class Player extends Rect{
 	constructor(){
 		super(
-			(CANVAS_WIDTH / 2) - (PLAYER_WIDTH / 2),
+			(CANVAS_WIDTH / 2) - (PLAYER_WIDTH / 2) + 2,// +2 is to hide the multi-brick-destruction glitch from players (until I fix it :)
 			CANVAS_HEIGHT - PLAYER_START_HEIGHT,
 			PLAYER_WIDTH,
 			PLAYER_HEIGHT,
