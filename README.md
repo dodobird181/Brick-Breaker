@@ -1,12 +1,11 @@
 # Brick-Breaker
-Created a simplified version of the classic "Breakout" arcade game (Brick-Breaker), which can be viewed/played online here: https://dodobird181.github.io/Brick-Breaker/.
+[See my code in action!](https://dodobird181.github.io/Brick-Breaker/)
 
 <div>
 <img src="https://github.com/dodobird181/Brick-Breaker/blob/main/screenshots/bbmenu.PNG" width="320" height="390">
 <img src="https://github.com/dodobird181/Brick-Breaker/blob/main/screenshots/bblevel.PNG" width="320" height="390">
 </div>
 
-### Goals
 After growing up playing Atari's "Breakout" on an old Asus flip-phone during long car rides with  my sister, and hearing about what it was possible to create using
 HTML5's Canvas element, I became slightly ambitious (having no prior Javascript experience) and decided to create my own version of Brick-Breaker!
 
