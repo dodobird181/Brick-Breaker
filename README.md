@@ -32,5 +32,5 @@ Because a project like Brick-Breaker is composed of many moving-parts, there are
 *  ~~Fix accidental brick deletion from array on ball collision.~~
 
 ### Acknowledgements
-I am in debt to Yann Sartori, who inspired me to learn Javacript with his version of [Pacman](https://github.com/yannsartori/Pac-Man), and
+I am indebted to Yann Sartori, who inspired me to learn Javacript with his version of [Pacman](https://github.com/yannsartori/Pac-Man), and
 Patrick de Arteaga, who provided the [royalty-free music](https://patrickdearteaga.com/) for my version of Brick-Breaker.
